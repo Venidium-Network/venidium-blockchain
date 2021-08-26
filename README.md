@@ -25,12 +25,12 @@ sudo apt install git -y
 git clone https://github.com/Venidium-Network/venidium-blockchain.git -b latest --recurse-submodules
 cd venidium-blockchain
 
-# set $VENIDIUM_ROOT var
-export VENIDIUM_ROOT="~/.venidium/kition"
-
 sh install.sh
 
 . ./activate
+
+# set $VENIDIUM_ROOT var
+export VENIDIUM_ROOT="~/.venidium/kition"
 
 venidium init
 
