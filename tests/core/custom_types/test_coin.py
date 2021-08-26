@@ -1,7 +1,7 @@
-from chia.types.blockchain_format.coin import Coin
-from chia.types.blockchain_format.sized_bytes import bytes32
-from chia.util.ints import uint64
-from chia.util.hash import std_hash
+from venidium.types.blockchain_format.coin import Coin
+from venidium.types.blockchain_format.sized_bytes import bytes32
+from venidium.util.ints import uint64
+from venidium.util.hash import std_hash
 import io
 
 

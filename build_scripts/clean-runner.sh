@@ -3,20 +3,10 @@
 
 rm -rf ../venv || true
 rm -rf venv || true
-rm -rf chia_blockchain.egg-info || true
+rm -rf venidium_blockchain.egg-info || true
 rm -rf build_scripts/final_installer || true
 rm -rf build_scripts/dist || true
 rm -rf build_scripts/pyinstaller || true
-rm -rf chia-blockchain-gui/build || true
-rm -rf chia-blockchain-gui/daemon || true
-rm -rf chia-blockchain-gui/node_modules || true
-
-# Do our best to get rid of any globally installed notarize-cli versions so the version in the current build script is
-# installed without conflicting with the other version that might be installed
-PATH=$(brew --prefix node@14)/bin:$PATH || true
-export PATH
-npm uninstall -g notarize-cli || true
-npm uninstall -g @chia-network/notarize-cli || true
-npm uninstall -g electron-installer-dmg || true
-npm uninstall -g electron-packager || true
-npm uninstall -g electron/electron-osx-sign || true
+rm -rf venidium-blockchain-gui/build || true
+rm -rf venidium-blockchain-gui/daemon || true
+rm -rf venidium-blockchain-gui/node_modules || true

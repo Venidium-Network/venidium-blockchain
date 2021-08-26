@@ -2,21 +2,21 @@ from typing import Dict, List, Optional, Tuple
 
 from blspy import AugSchemeMPL, G2Element, PrivateKey
 
-from chia.consensus.constants import ConsensusConstants
-from chia.util.hash import std_hash
-from chia.types.announcement import Announcement
-from chia.types.blockchain_format.coin import Coin
-from chia.types.blockchain_format.program import Program
-from chia.types.blockchain_format.sized_bytes import bytes32
-from chia.types.coin_spend import CoinSpend
-from chia.types.condition_opcodes import ConditionOpcode
-from chia.types.condition_with_args import ConditionWithArgs
-from chia.types.spend_bundle import SpendBundle
-from chia.util.clvm import int_from_bytes, int_to_bytes
-from chia.util.condition_tools import conditions_by_opcode, conditions_for_solution
-from chia.util.ints import uint32, uint64
-from chia.wallet.derive_keys import master_sk_to_wallet_sk
-from chia.wallet.puzzles.p2_delegated_puzzle_or_hidden_puzzle import (
+from venidium.consensus.constants import ConsensusConstants
+from venidium.util.hash import std_hash
+from venidium.types.announcement import Announcement
+from venidium.types.blockchain_format.coin import Coin
+from venidium.types.blockchain_format.program import Program
+from venidium.types.blockchain_format.sized_bytes import bytes32
+from venidium.types.coin_spend import CoinSpend
+from venidium.types.condition_opcodes import ConditionOpcode
+from venidium.types.condition_with_args import ConditionWithArgs
+from venidium.types.spend_bundle import SpendBundle
+from venidium.util.clvm import int_from_bytes, int_to_bytes
+from venidium.util.condition_tools import conditions_by_opcode, conditions_for_solution, pkm_pairs_for_conditions_dict
+from venidium.util.ints import uint32, uint64
+from venidium.wallet.derive_keys import master_sk_to_wallet_sk
+from venidium.wallet.puzzles.p2_delegated_puzzle_or_hidden_puzzle import (
     DEFAULT_HIDDEN_PUZZLE_HASH,
     calculate_synthetic_secret_key,
     puzzle_for_pk,
@@ -162,16 +162,11 @@ class WalletTool:
                 raise ValueError(err)
             conditions_dict = conditions_by_opcode(con)
 
-            for cwa in conditions_dict.get(ConditionOpcode.AGG_SIG_UNSAFE, []):
-                msg = cwa.vars[1]
+            for _, msg in pkm_pairs_for_conditions_dict(
+                conditions_dict, bytes(coin_spend.coin.name()), self.constants.AGG_SIG_ME_ADDITIONAL_DATA
+            ):
                 signature = AugSchemeMPL.sign(synthetic_secret_key, msg)
                 signatures.append(signature)
-
-            for cwa in conditions_dict.get(ConditionOpcode.AGG_SIG_ME, []):
-                msg = cwa.vars[1] + bytes(coin_spend.coin.name()) + self.constants.AGG_SIG_ME_ADDITIONAL_DATA
-                signature = AugSchemeMPL.sign(synthetic_secret_key, msg)
-                signatures.append(signature)
-
         aggsig = AugSchemeMPL.aggregate(signatures)
         spend_bundle = SpendBundle(coin_spends, aggsig)
         return spend_bundle

@@ -1,33 +1,21 @@
-from chia.server.outbound_message import NodeType
-from chia.server.server import ssl_context_for_server
-from chia.types.peer_info import PeerInfo
-from tests.block_tools import create_block_tools
-from chia.util.ints import uint16
-from chia.util.ws_message import create_payload
-from tests.core.node_height import node_height_at_least
-from tests.setup_nodes import setup_daemon, self_hostname, setup_full_system
-from tests.simulation.test_simulation import test_constants_modified
-from tests.time_out_assert import time_out_assert, time_out_assert_custom_interval
-from tests.util.keyring import TempKeyring
-
 import asyncio
-import atexit
 import json
 
 import aiohttp
 import pytest
+from venidium.server.outbound_message import NodeType
+from venidium.server.server import ssl_context_for_server
+from venidium.types.peer_info import PeerInfo
+from tests.block_tools import BlockTools
+from venidium.util.ints import uint16
+from venidium.util.ws_message import create_payload
+from tests.core.node_height import node_height_at_least
+from tests.setup_nodes import setup_daemon, self_hostname, setup_full_system
+from tests.simulation.test_simulation import test_constants_modified
+from tests.time_out_assert import time_out_assert, time_out_assert_custom_interval
 
-
-def cleanup_keyring(keyring: TempKeyring):
-    keyring.cleanup()
-
-
-temp_keyring1 = TempKeyring()
-temp_keyring2 = TempKeyring()
-atexit.register(cleanup_keyring, temp_keyring1)
-atexit.register(cleanup_keyring, temp_keyring2)
-b_tools = create_block_tools(constants=test_constants_modified, keychain=temp_keyring1.get_keychain())
-b_tools_1 = create_block_tools(constants=test_constants_modified, keychain=temp_keyring2.get_keychain())
+b_tools = BlockTools(constants=test_constants_modified)
+b_tools_1 = BlockTools(constants=test_constants_modified)
 new_config = b_tools._config
 new_config["daemon_port"] = 55401
 b_tools.change_config(new_config)
@@ -102,7 +90,7 @@ class TestDaemon:
 
         read_handler = asyncio.create_task(reader(ws, message_queue))
         data = {}
-        payload = create_payload("get_blockchain_state", data, service_name, "chia_full_node")
+        payload = create_payload("get_blockchain_state", data, service_name, "venidium_full_node")
         await ws.send_str(payload)
 
         await asyncio.sleep(5)

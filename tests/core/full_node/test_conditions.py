@@ -3,7 +3,6 @@ These are quick-to-run test that check spends can be added to the blockchain whe
 or that they're failing for the right reason when they're invalid.
 """
 
-import atexit
 import logging
 import time
 
@@ -15,31 +14,23 @@ from blspy import G2Element
 
 from clvm_tools.binutils import assemble
 
-from chia.consensus.blockchain import ReceiveBlockResult
-from chia.consensus.constants import ConsensusConstants
-from chia.types.announcement import Announcement
-from chia.types.blockchain_format.program import Program
-from chia.types.coin_record import CoinRecord
-from chia.types.coin_spend import CoinSpend
-from chia.types.condition_opcodes import ConditionOpcode
-from chia.types.full_block import FullBlock
-from chia.types.spend_bundle import SpendBundle
-from chia.util.errors import Err
-from chia.util.ints import uint32
-from tests.block_tools import create_block_tools, test_constants
-from tests.util.keyring import TempKeyring
+from venidium.consensus.blockchain import ReceiveBlockResult
+from venidium.consensus.constants import ConsensusConstants
+from venidium.types.announcement import Announcement
+from venidium.types.blockchain_format.program import Program
+from venidium.types.coin_record import CoinRecord
+from venidium.types.coin_spend import CoinSpend
+from venidium.types.condition_opcodes import ConditionOpcode
+from venidium.types.full_block import FullBlock
+from venidium.types.spend_bundle import SpendBundle
+from tests.block_tools import BlockTools, test_constants
+from venidium.util.errors import Err
+from venidium.util.ints import uint32
 
 from .ram_db import create_ram_blockchain
 
 
-def cleanup_keyring(keyring: TempKeyring):
-    keyring.cleanup()
-
-
-temp_keyring = TempKeyring()
-keychain = temp_keyring.get_keychain()
-atexit.register(cleanup_keyring, temp_keyring)  # Attempt to cleanup the temp keychain
-bt = create_block_tools(constants=test_constants, keychain=keychain)
+bt = BlockTools(constants=test_constants)
 
 
 log = logging.getLogger(__name__)
