@@ -1,6 +1,6 @@
 import pytest
-from chia.util.misc import format_bytes
-from chia.util.misc import format_minutes
+from venidium.util.misc import format_bytes
+from venidium.util.misc import format_minutes
 
 
 class TestMisc:

@@ -6,14 +6,14 @@ import io
 from clvm_tools import binutils
 from pytest import raises
 
-from chia.protocols.wallet_protocol import RespondRemovals
-from chia.types.blockchain_format.coin import Coin
-from chia.types.blockchain_format.program import Program
-from chia.types.blockchain_format.sized_bytes import bytes32
-from chia.types.full_block import FullBlock
-from chia.types.weight_proof import SubEpochChallengeSegment
-from chia.util.ints import uint8, uint32
-from chia.util.streamable import (
+from venidium.protocols.wallet_protocol import RespondRemovals
+from venidium.types.blockchain_format.coin import Coin
+from venidium.types.blockchain_format.program import Program
+from venidium.types.blockchain_format.sized_bytes import bytes32
+from venidium.types.full_block import FullBlock
+from venidium.types.weight_proof import SubEpochChallengeSegment
+from venidium.util.ints import uint8, uint32
+from venidium.util.streamable import (
     Streamable,
     streamable,
     parse_bool,
