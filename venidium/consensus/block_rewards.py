@@ -15,7 +15,7 @@ def calculate_pool_reward(height: uint32) -> uint64:
     """
 
     if height == 0:
-        return uint64(int((7 / 8) * 527336000 * _ray_per_venidium))
+        return uint64(int((7 / 8) * 502336000 * _ray_per_venidium))
     elif height < 1 * _blocks_per_year / 4:
         return uint64(int((7 / 8) * 640 * _ray_per_venidium))
     elif height < 2 * _blocks_per_year / 4:
@@ -38,7 +38,7 @@ def calculate_base_farmer_reward(height: uint32) -> uint64:
     rates increase continuously.
     """
     if height == 0:
-        return uint64(int((1 / 8) * 527336000 * _ray_per_venidium))
+        return uint64(int((1 / 8) * 502336000 * _ray_per_venidium))
     elif height < 1 * _blocks_per_year / 4:
         return uint64(int((1 / 8) * 640 * _ray_per_venidium))
     elif height < 2 * _blocks_per_year / 4:
