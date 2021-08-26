@@ -1,5 +1,5 @@
 import click
-from chia.util.keychain import supports_keyring_passphrase
+from venidium.util.keychain import supports_keyring_passphrase
 
 
 @click.command("init", short_help="Create or migrate the configuration")
@@ -32,7 +32,7 @@ def init_cmd(ctx: click.Context, create_certs: str, fix_ssl_permissions: bool, *
     """
     from pathlib import Path
     from .init_funcs import init
-    from chia.cmds.passphrase_funcs import initialize_passphrase
+    from venidium.cmds.passphrase_funcs import initialize_passphrase
 
     set_passphrase = kwargs.get("set_passphrase")
     if set_passphrase:
@@ -42,7 +42,7 @@ def init_cmd(ctx: click.Context, create_certs: str, fix_ssl_permissions: bool, *
 
 
 if not supports_keyring_passphrase():
-    from chia.cmds.passphrase_funcs import remove_passphrase_options_from_cmd
+    from venidium.cmds.passphrase_funcs import remove_passphrase_options_from_cmd
 
     # TODO: Remove once keyring passphrase management is rolled out to all platforms
     remove_passphrase_options_from_cmd(init_cmd)
