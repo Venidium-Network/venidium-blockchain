@@ -23,8 +23,8 @@ network_overrides: &network_overrides
       NETWORK_TYPE: 1
       GENESIS_PRE_FARM_POOL_PUZZLE_HASH: "c50843712cc740a066fc86932c2340c1d79f3f41543372240e1ab5738a5f3c4d"
       GENESIS_PRE_FARM_FARMER_PUZZLE_HASH: "c50843712cc740a066fc86932c2340c1d79f3f41543372240e1ab5738a5f3c4d"
-      # DIFFICULTY_CONSTANT_FACTOR is equal to 2 ** 57 only for the testnet, mainnet would have higher
-      DIFFICULTY_CONSTANT_FACTOR: 144115188075855872
+      # DIFFICULTY_CONSTANT_FACTOR is equal to 2 ** 64 only for the testnet, mainnet value is not final
+      DIFFICULTY_CONSTANT_FACTOR: 18446744073709551616
   config:
     mainnet:
       address_prefix: "xvm"
