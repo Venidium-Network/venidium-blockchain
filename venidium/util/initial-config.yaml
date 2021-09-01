@@ -3,7 +3,7 @@ min_mainnet_k_size: 32
 # Send a ping to all peers after ping_interval seconds
 ping_interval: 120
 self_hostname: &self_hostname "localhost"
-daemon_port: 52900
+daemon_port: 52700
 inbound_rate_limit_percent: 100
 outbound_rate_limit_percent: 30
 
@@ -28,10 +28,10 @@ network_overrides: &network_overrides
   config:
     mainnet:
       address_prefix: "xvm"
-      default_full_node_port: 5944
+      default_full_node_port: 5744
     kition:
       address_prefix: "txvm"
-      default_full_node_port: 55944
+      default_full_node_port: 55744
 
 selected_network: &selected_network "mainnet"
 ALERTS_URL: https://download.venidium.io/notify/mainnet_alert.txt
@@ -65,14 +65,14 @@ logging: &logging
 
 harvester:
   # The harvester server (if run) will run on this port
-  port: 5948
+  port: 5748
   farmer_peer:
     host: *self_hostname
-    port: 5947
+    port: 5747
 
   # If True, starts an RPC server at the following port
   start_rpc_server: True
-  rpc_port: 6060
+  rpc_port: 5860
   num_threads: 30
   plots_refresh_parameter:
     interval_seconds: 120 # The interval in seconds to refresh the plot file manager
@@ -112,14 +112,14 @@ pool:
 
 farmer:
   # The farmer server (if run) will run on this port
-  port: 5947
+  port: 5747
   # The farmer will attempt to connect to this full node and harvester
   full_node_peer:
     host: *self_hostname
-    port: 5944
+    port: 5744
   harvester_peer:
     host: *self_hostname
-    port: 5948
+    port: 5748
 
   pool_public_keys: []
 
@@ -128,7 +128,7 @@ farmer:
 
   # If True, starts an RPC server at the following port
   start_rpc_server: True
-  rpc_port: 6059
+  rpc_port: 5859
 
   # To send a share to a pool, a proof of space must have required_iters less than this number
   pool_share_threshold: 1000
@@ -145,7 +145,7 @@ farmer:
 # Don't run this unless you want to run VDF clients on the local machine.
 timelord_launcher:
   # The server where the VDF clients will connect to.
-  port: 5500
+  port: 5300
   # Number of VDF client processes to keep alive in the local machine.
   process_count: 3
   logging: *logging
@@ -153,7 +153,7 @@ timelord_launcher:
 
 timelord:
   # The timelord server (if run) will run on this port
-  port: 5946
+  port: 5746
   # Provides a list of VDF clients expected to connect to this timelord.
   # For each client, an IP is provided, together with the estimated iterations per second.
   vdf_clients:
@@ -165,13 +165,13 @@ timelord:
       - 150000
   full_node_peer:
       host: *self_hostname
-      port: 5944
+      port: 5744
   # Maximum number of seconds allowed for a client to reconnect to the server.
   max_connection_time: 60
   # The ip and port where the TCP clients will connect.
   vdf_server:
     host: *self_hostname
-    port: 5500
+    port: 5300
   logging: *logging
   network_overrides: *network_overrides
   selected_network: *selected_network
@@ -200,7 +200,7 @@ timelord:
 
 full_node:
   # The full node server (if run) will run on this port
-  port: 5944
+  port: 5744
 
   # Run multiple nodes with different databases by changing the database_path
   database_path: db/blockchain_v1_CHALLENGE.sqlite
@@ -210,7 +210,7 @@ full_node:
 
   # If True, starts an RPC server at the following port
   start_rpc_server: True
-  rpc_port: 6055
+  rpc_port: 5855
 
   # Use UPnP to attempt to allow other full nodes to reach your node behind a gateway
   enable_upnp: True
@@ -258,16 +258,16 @@ full_node:
     - "dns-introducer.venidium.io"
   farmer_peer:
       host: *self_hostname
-      port: 5947
+      port: 5747
   timelord_peer:
       host: *self_hostname
-      port: 5946
+      port: 5746
   introducer_peer:
       host: introducer.venidium.io  # Venidium AWS introducer IPv4/IPv6
-      port: 5944
+      port: 5744
   wallet_peer:
     host: *self_hostname
-    port: 5949
+    port: 5749
   logging: *logging
   network_overrides: *network_overrides
   selected_network: *selected_network
@@ -280,10 +280,10 @@ full_node:
 
 ui:
    # The ui node server (if run) will run on this port
-  port: 5722
+  port: 5522
 
   # Which port to use to communicate with the full node
-  rpc_port: 6055
+  rpc_port: 5855
 
   # This SSH key is for the ui SSH server
   ssh_filename: config/ssh_host_key
@@ -294,14 +294,14 @@ ui:
   # this is where the electron UI will find its daemon
   # defaults to the one running locally with its private keys
   daemon_host: *self_hostname
-  daemon_port: 52900
+  daemon_port: 52700
   daemon_ssl:
     private_crt: config/ssl/daemon/private_daemon.crt
     private_key: config/ssl/daemon/private_daemon.key
 
 introducer:
   host: *self_hostname
-  port: 5945
+  port: 5745
   max_peers_to_send: 20
   # The introducer will only return peers who it has seen in the last
   # recent_peer_threshold seconds
@@ -315,8 +315,8 @@ introducer:
     public_key:  "config/ssl/full_node/public_full_node.key"
 
 wallet:
-  port: 5949
-  rpc_port: 6756
+  port: 5749
+  rpc_port: 6556
 
   enable_profiler: False
 
@@ -330,7 +330,7 @@ wallet:
 
   full_node_peer:
     host: *self_hostname
-    port: 5944
+    port: 5744
 
   testing: False
   database_path: wallet/db/blockchain_wallet_v1_CHALLENGE_KEY.sqlite
@@ -348,7 +348,7 @@ wallet:
 
   introducer_peer:
     host: introducer.venidium.io # Venidium AWS introducer IPv4/IPv6
-    port: 5944
+    port: 5744
 
   ssl:
     private_crt:  "config/ssl/wallet/private_wallet.crt"
