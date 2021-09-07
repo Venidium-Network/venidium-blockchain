@@ -36,4 +36,11 @@ venidium init
 
 venidium configure -t true
 
+# install gui
+sh install-gui.sh
+
+# activate GUI
+cd venidium-blockchain-gui
+npm run electron &
+
 ```
