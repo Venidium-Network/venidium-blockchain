@@ -2,3 +2,6 @@
 	path = mozilla-ca
 	url = https://github.com/Venidium-Network/mozilla-ca.git
         branch = main
+[submodule "venidium-blockchain-gui"]
+	path = venidium-blockchain-gui
+	url = git@github.com:Venidium-Network/venidium-blockchain-gui.git
