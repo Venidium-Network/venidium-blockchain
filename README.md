@@ -44,3 +44,32 @@ cd venidium-blockchain-gui
 npm run electron &
 
 ```
+
+# Installation instructions for macOS
+
+For macOS, make sure [brew](https://brew.sh/) is available before starting the setup and that python 3.7 or newer is installed.
+
+```shell
+# Checkout the source and install
+git clone https://github.com/Venidium-Network/venidium-blockchain.git -b latest --recurse-submodules
+cd venidium-blockchain
+
+# set $VENIDIUM_ROOT var
+export VENIDIUM_ROOT="~/.venidium/kition"
+
+sh install.sh
+
+. ./activate
+
+venidium init
+
+venidium configure -t true
+
+# install gui
+sh install-gui.sh
+
+# activate GUI
+cd venidium-blockchain-gui
+npm run electron &
+
+```
