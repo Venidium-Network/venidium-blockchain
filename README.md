@@ -73,3 +73,41 @@ cd venidium-blockchain-gui
 npm run electron &
 
 ```
+
+# Windows
+
+We are working on building a Windows installer for Venidium GUI. There is no need to use the command line.
+
+## WSL2
+
+If you feel comfortable with using the command line, you can install Venidium (CLI only*, no GUI for the moment) on a WSL2 instance.
+
+Install Ubuntu 20.04 LTS from the Microsoft Store and run it and complete its initial install steps. You now have a linux bash shell environment that can run linux native software on Windows.
+
+Then follow the steps below which are the same as the usual Ubuntu instructions above with a target of Python 3.8.
+
+```shell
+sudo apt-get update
+sudo apt-get upgrade -y
+
+# Install Git
+sudo apt install git -y
+
+# Checkout the source and install
+git clone https://github.com/Venidium-Network/venidium-blockchain.git -b latest --recurse-submodules
+cd venidium-blockchain
+
+# set $VENIDIUM_ROOT var
+export VENIDIUM_ROOT="~/.venidium/kition"
+
+sh install.sh
+
+. ./activate
+
+venidium init
+
+venidium configure -t true
+
+```
+
+*There is no easy way to have the GUI working while having the wallet/node running in a WSL2 instance.
