@@ -4,4 +4,4 @@
         branch = main
 [submodule "venidium-blockchain-gui"]
 	path = venidium-blockchain-gui
-	url = git@github.com:Venidium-Network/venidium-blockchain-gui.git
+	url = https://github.com/Venidium-Network/venidium-blockchain-gui.git
