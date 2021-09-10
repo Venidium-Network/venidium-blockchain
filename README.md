@@ -76,11 +76,24 @@ npm run electron &
 
 # Windows
 
-We are working on building a Windows installer for Venidium GUI. There is no need to use the command line.
+## GUI
+
+Shortly after this release, the windows installer should be available for download.  
+Please check the [releases](https://github.com/Venidium-Network/venidium-blockchain/releases) page.
+
+Please follow the steps in order to join kition testnet:
+
+1. Download the latest windows installer from the [releases](https://github.com/Venidium-Network/venidium-blockchain/releases) page.
+1. Download [set-environment-for-kition.bat](https://github.com/Venidium-Network/venidium-blockchain/raw/latest/helper-scripts/set-environment-for-kition.bat)
+1. Run the installer by double-clicking on the file
+1. Run set-environment-for-kition.bat by double clicking on the file
+1. You can now use the Venidium shortcut to launch the GUI
 
 ## WSL2
 
-If you feel comfortable with using the command line, you can install Venidium (CLI only*, no GUI for the moment) on a WSL2 instance.
+*We suggest the use of the Windows GUI installer instead of running venidium over WSL2*
+
+If you feel comfortable with using the command line, you can install Venidium (CLI) on a WSL2 instance.
 
 Install Ubuntu 20.04 LTS from the Microsoft Store and run it and complete its initial install steps. You now have a linux bash shell environment that can run linux native software on Windows.
 
@@ -110,4 +123,5 @@ venidium configure -t true
 
 ```
 
-*There is no easy way to have the GUI working while having the wallet/node running in a WSL2 instance.
+*There is no easy way to have the GUI working while having the wallet/node running in a WSL2 instance.*  
+*We suggest the use of the GUI installer instead.*
