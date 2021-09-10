@@ -83,10 +83,10 @@ Please check the [releases](https://github.com/Venidium-Network/venidium-blockch
 
 Please follow the steps in order to join kition testnet:
 
-1. Download the latest windows installer from the [releases](https://github.com/Venidium-Network/venidium-blockchain/releases) page.
-1. Download [set-environment-for-kition.bat](https://github.com/Venidium-Network/venidium-blockchain/raw/latest/helper-scripts/set-environment-for-kition.bat)
-1. Run the installer by double-clicking on the file
-1. Run set-environment-for-kition.bat by double clicking on the file
+1. Download the latest windows installer (zip) from the [releases](https://github.com/Venidium-Network/venidium-blockchain/releases) page.
+1. Right-click on the zip file, open with, Windows Explorer
+1. Double-click on the VenidiumSetup file (exe) and wait for the installation to finish
+1. Double click on the set-environment-for-kition.bat file and wait for the command line window to dissapear.
 1. You can now use the Venidium shortcut to launch the GUI
 
 ## WSL2
