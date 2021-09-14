@@ -81,14 +81,19 @@ npm run electron &
 Shortly after this release, the windows installer should be available for download.  
 Please check the [releases](https://github.com/Venidium-Network/venidium-blockchain/releases) page.
 
+ℹ️ _Before you start, you are advised to __not launch the installer directly__. This will set it up for the mainnet. We have prepared a script to install Venidium for you and also set it up for kition testnet._
+
 Please follow the steps in order to join kition testnet:
 
 1. Download the latest windows installer (zip) from the [releases](https://github.com/Venidium-Network/venidium-blockchain/releases) page.
-1. Right-click on the zip file, open with, Windows Explorer
-1. Double-click on the VenidiumSetup file (exe) and wait for the installation to finish
-1. Close the Venidium GUI since it will try to connect to a non-existent mainnet
-3. Double click on the set-environment-for-kition.bat file and wait for the command line window to disappear.
-4. You can now use the Venidium shortcut to launch the GUI
+1. Extract the zip file.
+1. Double-click on `install-and-configure-kition` file (bat) and wait for Venidium Blockchain GUI to start.
+1. Select the available key (you can add more keys or remove any existing keys later).
+1. State that you don't have a backup by clicking on "Safe to skip" button.
+1. Scroll down if needed and click on "Connect to other peers" button
+1. On "IP address / host" enter `beta1_introducer.venidium.io`, on "Port" enter `55744` and click "Connect".
+1. __WAIT__!
+1. Go back to step 8.
 
 ## WSL2
 
