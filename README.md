@@ -87,13 +87,14 @@ Please follow the steps in order to join kition testnet:
 
 1. Download the latest windows installer (zip) from the [releases](https://github.com/Venidium-Network/venidium-blockchain/releases) page.
 1. Extract the zip file.
-1. Double-click on `install-and-configure-kition` file (bat) and wait for Venidium Blockchain GUI to start.
+1. Right-click on `install-and-configure-kition` file (ps1) and click on "Run with PowerShell".
+1. Wait until Venidium Blockchain GUI Windows shows up.
 1. Select the available key (you can add more keys or remove any existing keys later).
 1. State that you don't have a backup by clicking on "Safe to skip" button.
 1. Scroll down if needed and click on "Connect to other peers" button
 1. On "IP address / host" enter `beta1_introducer.venidium.io`, on "Port" enter `55744` and click "Connect".
 1. __WAIT__!
-1. Go back to step 8.
+1. Go back to step 9.
 
 ## WSL2
 
