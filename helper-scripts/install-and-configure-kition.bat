@@ -1,3 +1,17 @@
+@ECHO off
+@setlocal EnableDelayedExpansion
+
+
+
+@set LF=^
+
+
+@SET command=#
+@FOR /F "tokens=*" %%i in ('findstr -bv @ "%~f0"') DO SET command=!command!!LF!%%i
+@powershell -noprofile -noexit -command !command! & goto:eof
+
+
+# *** POWERSHELL CODE STARTS HERE *** #
 setx VENIDIUM_ROOT "$env:HOMEDRIVE$env:HOMEPATH\.venidium\kition"
 
 Write-Output "`n`nPlease wait. The installation will take some time`n`n"
