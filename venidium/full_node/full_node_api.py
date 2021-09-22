@@ -1275,7 +1275,7 @@ class FullNodeAPI:
     @api_request
     @bytes_required
     async def new_compact_vdf(
-        self, request: full_node_protocol.NewCompactVDF, peer: ws.WSChiaConnection, request_bytes: bytes = b""
+        self, request: full_node_protocol.NewCompactVDF, peer: ws.WSVenidiumConnection, request_bytes: bytes = b""
     ):
         if self.full_node.sync_store.get_sync_mode():
             return None
