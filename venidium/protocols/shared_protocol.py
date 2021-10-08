@@ -5,7 +5,7 @@ from typing import List, Tuple
 from venidium.util.ints import uint8, uint16
 from venidium.util.streamable import Streamable, streamable
 
-protocol_version = "0.0.32"
+protocol_version = "0.0.33"
 
 """
 Handshake when establishing a connection between two servers.
