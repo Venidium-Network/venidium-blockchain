@@ -13,6 +13,7 @@
 
 # *** POWERSHELL CODE STARTS HERE *** #
 setx VENIDIUM_ROOT "$env:HOMEDRIVE$env:HOMEPATH\.venidium\kition"
+$env:VENIDIUM_ROOT = "$env:HOMEDRIVE$env:HOMEPATH\.venidium\kition"
 
 Write-Output "`n`nPlease wait. The installation will take some time`n`n"
 
