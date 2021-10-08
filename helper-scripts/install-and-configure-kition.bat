@@ -21,9 +21,16 @@ Start-Process -WorkingDirectory (Get-Item .).FullName -FilePath "VenidiumSetup-0
 
 Write-Output "`n`nPlease wait. Kition testnet is now being configured`n`n"
 
-& "$env:localappdata\venidium-blockchain\app-0.4.0\resources\app.asar.unpacked\daemon\Venidium.exe" init
-& "$env:localappdata\venidium-blockchain\app-0.4.0\resources\app.asar.unpacked\daemon\Venidium.exe" keys generate
-& "$env:localappdata\venidium-blockchain\app-0.4.0\resources\app.asar.unpacked\daemon\Venidium.exe" configure --testnet true
+& "$env:localappdata\venidium-blockchain\app-0.4.10\resources\app.asar.unpacked\daemon\Venidium.exe" init
+
+$keys = & "$env:localappdata\venidium-blockchain\app-0.4.10\resources\app.asar.unpacked\daemon\Venidium.exe" keys show
+
+if ( $keys -eq "There are no saved private keys" )
+{
+    & "$env:localappdata\venidium-blockchain\app-0.4.10\resources\app.asar.unpacked\daemon\Venidium.exe" keys generate
+}
+
+& "$env:localappdata\venidium-blockchain\app-0.4.10\resources\app.asar.unpacked\daemon\Venidium.exe" configure --testnet true
 
 Write-Output "`n`nLaunching Venidium Blockchain`n`n"
 
