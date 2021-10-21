@@ -42,10 +42,10 @@ $cleanupMenu = 'Cleanup the whole venidium directory (highly recommended)', 'Cle
 $cleanup = Simple-Menu -MenuItems $cleanupMenu -Title "Cleanup files/directories"
 switch ($cleanup) {
     'Cleanup the whole venidium directory (highly recommended)' {
-        Remove-Item $HOMEDRIVE$HOMEPATH\.venidium\ -Recurse
+        Remove-Item $env:HOMEDRIVE$env:HOMEPATH\.venidium\ -Recurse
     }
     'Cleanup only the Mainnet directory (not recommended)' {
-        Remove-Item $HOMEDRIVE$HOMEPATH\.venidium\mainnet\ -Recurse
+        Remove-Item $env:HOMEDRIVE$env:HOMEPATH\.venidium\mainnet\ -Recurse
     }
     'Quit' {
         $quit = 1
@@ -60,8 +60,12 @@ $cleanupMenu = 'Cleanup VENIDIUM_ROOT environment variable (highly recommended)'
 $cleanup = Simple-Menu -MenuItems $cleanupMenu -Title "Cleanup env vars"
 switch ($cleanup) {
     'Cleanup VENIDIUM_ROOT environment variable (highly recommended)' {
-        setx VENIDIUM_ROOT ""
-        REG delete “HKCU\Environment” /F /V "VENIDIUM_ROOT"
+        Invoke-Command -ScriptBlock {
+            cmd.exe /C 'setx.exe VENIDIUM_ROOT ""'
+        }
+        Invoke-Command -ScriptBlock {
+            cmd.exe /C 'REG" delete "HKCU\Environment" /F /V "VENIDIUM_ROOT"'
+        }
         [Environment]::SetEnvironmentVariable('VENIDIUM_ROOT', $null, 'User')
     }
     'Quit' {
