@@ -2,9 +2,7 @@
 
 Hello and welcome to Venidium Blockchain.
 
-We are happy to announce the launch of our testnet today.
-
-If you would like to join this test phase and contribute to our network please follow the instruction below.
+We are happy to announce the launch of our mainnet today.
 
 _For now, we only provide instructions for the command line interface client._  
 _Binary clients for **command line interface** but also for **graphical user interface** are currently under development but would be ready before the mainnet launch._  
@@ -25,16 +23,11 @@ sudo apt install git -y
 git clone https://github.com/Venidium-Network/venidium-blockchain.git -b latest --recurse-submodules
 cd venidium-blockchain
 
-# set $VENIDIUM_ROOT var
-export VENIDIUM_ROOT="~/.venidium/kition"
-
 sh install.sh
 
 . ./activate
 
 venidium init
-
-venidium configure -t true
 
 # install gui
 sh install-gui.sh
@@ -42,7 +35,6 @@ sh install-gui.sh
 # activate GUI
 cd venidium-blockchain-gui
 npm run electron &
-
 ```
 
 # Installation instructions for macOS
@@ -54,16 +46,11 @@ For macOS, make sure [brew](https://brew.sh/) is available before starting the s
 git clone https://github.com/Venidium-Network/venidium-blockchain.git -b latest --recurse-submodules
 cd venidium-blockchain
 
-# set $VENIDIUM_ROOT var
-export VENIDIUM_ROOT="~/.venidium/kition"
-
 sh install.sh
 
 . ./activate
 
 venidium init
-
-venidium configure -t true
 
 # install gui
 sh install-gui.sh
@@ -71,7 +58,6 @@ sh install-gui.sh
 # activate GUI
 cd venidium-blockchain-gui
 npm run electron &
-
 ```
 
 # Windows
@@ -81,20 +67,37 @@ npm run electron &
 Shortly after this release, the windows installer should be available for download.  
 Please check the [releases](https://github.com/Venidium-Network/venidium-blockchain/releases) page.
 
-ℹ️ _Before you start, you are advised to __not launch the installer directly__. This will set it up for the mainnet. We have prepared a script to install Venidium for you and also set it up for kition testnet._
+ℹ️ _Before you start, you are advised to __not launch the installer directly__. We have prepared an executable that you need to run to make sure previous installations don't interfere. Please run `cleanup-testnet-environment` (exe) that you can find at the [releases](https://github.com/Venidium-Network/venidium-blockchain/releases) page before installing venidium_
 
-Please follow the steps in order to join kition testnet:
+Please follow the steps in order to cleanly install venidium:
 
-1. Download the latest windows installer (zip) from the [releases](https://github.com/Venidium-Network/venidium-blockchain/releases) page.
-1. Extract the zip file.
-1. Double click on `install-and-configure-kition` file (bat).
-1. Wait until Venidium Blockchain GUI Windows shows up.
-1. Select the available key (you can add more keys or remove any existing keys later).
-1. State that you don't have a backup by clicking on "Safe to skip" button.
-1. Scroll down if needed and click on "Connect to other peers" button
-1. On "IP address / host" enter `beta1_introducer.venidium.io`, on "Port" enter `55744` and click "Connect".
-1. __WAIT__!
-1. Go back to step 8.
+1. Download the latest `cleanup-testnet-environment` (exe) file from the [releases](https://github.com/Venidium-Network/venidium-blockchain/releases) page.
+1. Double click on `cleanup-testnet-environment` file (exe).
+1. Select the `Cleanup the whole venidium directory (highly recommended)` option by pressing `1` and then enter.
+1. Select the `Cleanup VENIDIUM_ROOT environment variable (highly recommended)` options by pressing `1` and then enter.
+1. Download the latest `VenidiumSetup` (exe) file from the [releases](https://github.com/Venidium-Network/venidium-blockchain/releases) page.
+1. Double-click on `VenidiumSetup` (exe) and wait for the installation to finish.
+1. Venidiub Blockchain should now start. You can recover/generate your keys, add your plot directories.
+
+For people that want to join the testnet directly on launch, you would need to perform a few extra steps.
+
+1. Visit [https://download.venidium.io/notify/mainnet_alert.txt](https://download.venidium.io/notify/mainnet_alert.txt)
+1. If the text you get includes `\"ready\": false` then the mainnet wasn't initiated yet. Keep refreshing until you notice any changes.
+1. Once the text includes `\"ready\": true`, you are ready to configure your node. Keep your browser open, you will need the value of the `\"genesis_challenge\"` section later.
+1. Open notepad by pressing start, typing `notepad` and clicking on the notepad icon
+![Notepad](/images/win1.PNG)
+1. In notepad click the file menu and select open
+1. In the address bar, paste the following: `%homedrive%%homepath%.venidium\mainnet\config` and press enter
+![Notepad - go to the correct directory](/images/win2.png)
+1. On the bottom right corner, select `All files`
+1. Select the `config` (yaml) file and press open
+![Notepad - open the config file](/images/win3.png)
+1. Locate the line that contains `GENESIS_CHALLENGE: null`
+1. On your browser, copy the value of the `\"genesis_challenge\"` section. (Be careful not to copy any neigbouring characters such as `\"`!)
+1. On notepad, replace the `null` value with the `genesis_challenge` value that you copied from your browser.
+![Notepad - open the config file](/images/win4.png)
+1. On notepad, click `File > Save` and exit
+1. Launch Venidium Blockchain. You can restore/generate keys, include plot directories and start farming.
 
 ## WSL2
 
@@ -117,17 +120,11 @@ sudo apt install git -y
 git clone https://github.com/Venidium-Network/venidium-blockchain.git -b latest --recurse-submodules
 cd venidium-blockchain
 
-# set $VENIDIUM_ROOT var
-export VENIDIUM_ROOT="~/.venidium/kition"
-
 sh install.sh
 
 . ./activate
 
 venidium init
-
-venidium configure -t true
-
 ```
 
 *There is no easy way to have the GUI working while having the wallet/node running in a WSL2 instance.*  
