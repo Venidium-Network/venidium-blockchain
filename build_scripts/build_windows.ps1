@@ -109,7 +109,7 @@ Write-Output "packageName is $packageName"
 
 Write-Output "   ---"
 Write-Output "fix version in package.json"
-choco install jq
+choco install jq -y
 cp package.json package.json.orig
 jq --arg VER "$env:VENIDIUM_INSTALLER_VERSION" '.version=$VER' package.json > temp.json
 rm package.json
@@ -139,6 +139,11 @@ If ($env:HAS_SECRET) {
 }
 
 git status
+
+Write-Output "   ---"
+Write-Output "open directory"
+Invoke-Item .
+Write-Output "   ---"
 
 Write-Output "   ---"
 Write-Output "Windows Installer complete"
