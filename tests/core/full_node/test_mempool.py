@@ -6,42 +6,42 @@ from typing import Dict, List, Optional, Tuple, Callable
 
 import pytest
 
-import chia.server.ws_connection as ws
+import venidium.server.ws_connection as ws
 
-from chia.full_node.mempool import Mempool
-from chia.full_node.full_node_api import FullNodeAPI
-from chia.protocols import full_node_protocol
-from chia.simulator.simulator_protocol import FarmNewBlockProtocol
-from chia.types.announcement import Announcement
-from chia.types.blockchain_format.coin import Coin
-from chia.types.blockchain_format.sized_bytes import bytes32
-from chia.types.coin_spend import CoinSpend
-from chia.types.condition_opcodes import ConditionOpcode
-from chia.types.condition_with_args import ConditionWithArgs
-from chia.types.spend_bundle import SpendBundle
-from chia.types.mempool_item import MempoolItem
-from chia.util.clvm import int_to_bytes
-from chia.util.condition_tools import conditions_for_solution, pkm_pairs
-from chia.util.errors import Err
-from chia.util.ints import uint64
-from chia.util.hash import std_hash
-from chia.types.mempool_inclusion_status import MempoolInclusionStatus
-from chia.util.api_decorators import api_request, peer_required, bytes_required
-from chia.full_node.mempool_check_conditions import get_name_puzzle_conditions
-from chia.types.name_puzzle_condition import NPC
-from chia.full_node.pending_tx_cache import PendingTxCache
+from venidium.full_node.mempool import Mempool
+from venidium.full_node.full_node_api import FullNodeAPI
+from venidium.protocols import full_node_protocol
+from venidium.simulator.simulator_protocol import FarmNewBlockProtocol
+from venidium.types.announcement import Announcement
+from venidium.types.blockchain_format.coin import Coin
+from venidium.types.blockchain_format.sized_bytes import bytes32
+from venidium.types.coin_spend import CoinSpend
+from venidium.types.condition_opcodes import ConditionOpcode
+from venidium.types.condition_with_args import ConditionWithArgs
+from venidium.types.spend_bundle import SpendBundle
+from venidium.types.mempool_item import MempoolItem
+from venidium.util.clvm import int_to_bytes
+from venidium.util.condition_tools import conditions_for_solution, pkm_pairs
+from venidium.util.errors import Err
+from venidium.util.ints import uint64
+from venidium.util.hash import std_hash
+from venidium.types.mempool_inclusion_status import MempoolInclusionStatus
+from venidium.util.api_decorators import api_request, peer_required, bytes_required
+from venidium.full_node.mempool_check_conditions import get_name_puzzle_conditions
+from venidium.types.name_puzzle_condition import NPC
+from venidium.full_node.pending_tx_cache import PendingTxCache
 from blspy import G2Element
 
-from chia.util.recursive_replace import recursive_replace
+from venidium.util.recursive_replace import recursive_replace
 from tests.connection_utils import connect_and_get_peer
 from tests.core.node_height import node_height_at_least
 from tests.setup_nodes import bt, setup_simulators_and_wallets
 from tests.time_out_assert import time_out_assert
-from chia.types.blockchain_format.program import Program, INFINITE_COST
-from chia.consensus.cost_calculator import NPCResult
-from chia.types.blockchain_format.program import SerializedProgram
+from venidium.types.blockchain_format.program import Program, INFINITE_COST
+from venidium.consensus.cost_calculator import NPCResult
+from venidium.types.blockchain_format.program import SerializedProgram
 from clvm_tools import binutils
-from chia.types.generator_types import BlockGenerator
+from venidium.types.generator_types import BlockGenerator
 from clvm.casts import int_from_bytes
 from blspy import G1Element
 
@@ -194,7 +194,7 @@ class TestMempool:
 async def respond_transaction(
     node: FullNodeAPI,
     tx: full_node_protocol.RespondTransaction,
-    peer: ws.WSChiaConnection,
+    peer: ws.WSVenidiumConnection,
     tx_bytes: bytes = b"",
     test: bool = False,
 ) -> Tuple[MempoolInclusionStatus, Optional[Err]]:
@@ -1700,18 +1700,18 @@ class TestGeneratorConditions:
         ],
     )
     def test_duplicate_height_time_conditions(self, opcode):
-        # even though the generator outputs multiple conditions, we only
-        # need to return the highest one (i.e. most strict)
+            # even though the generator outputs multiple conditions, we only
+            # need to return the highest one (i.e. most strict)
         npc_result = generator_condition_tester(" ".join([f"({opcode.value[0]} {i})" for i in range(50, 101)]))
         print(npc_result)
-        assert npc_result.error is None
-        assert len(npc_result.npc_list) == 1
-        max_arg = 0
-        assert npc_result.npc_list[0].conditions[0][0] == opcode
-        for c in npc_result.npc_list[0].conditions[0][1]:
-            assert c.opcode == opcode
-            max_arg = max(max_arg, int_from_bytes(c.vars[0]))
-        assert max_arg == 100
+            assert npc_result.error is None
+            assert len(npc_result.npc_list) == 1
+            max_arg = 0
+            assert npc_result.npc_list[0].conditions[0][0] == opcode
+            for c in npc_result.npc_list[0].conditions[0][1]:
+                assert c.opcode == opcode
+                max_arg = max(max_arg, int_from_bytes(c.vars[0]))
+            assert max_arg == 100
 
     @pytest.mark.parametrize(
         "opcode",
@@ -1721,15 +1721,15 @@ class TestGeneratorConditions:
         ],
     )
     def test_just_announcement(self, opcode):
-        message = "a" * 1024
-        # announcements are validated on the Rust side and never returned
-        # back. They are either satisified or cause an immediate failure
+            message = "a" * 1024
+            # announcements are validated on the Rust side and never returned
+            # back. They are either satisified or cause an immediate failure
         npc_result = generator_condition_tester(f'({opcode.value[0]} "{message}") ' * 50)
-        assert npc_result.error is None
-        assert len(npc_result.npc_list) == 1
-        # create-announcements and assert-announcements are dropped once
-        # validated
-        assert npc_result.npc_list[0].conditions == []
+            assert npc_result.error is None
+            assert len(npc_result.npc_list) == 1
+                # create-announcements and assert-announcements are dropped once
+                # validated
+                assert npc_result.npc_list[0].conditions == []
 
     @pytest.mark.parametrize(
         "opcode",
@@ -1739,15 +1739,15 @@ class TestGeneratorConditions:
         ],
     )
     def test_assert_announcement_fail(self, opcode):
-        message = "a" * 1024
-        # announcements are validated on the Rust side and never returned
-        # back. They ar either satisified or cause an immediate failure
-        # in this test we just assert announcements, we never make them, so
-        # these should fail
+            message = "a" * 1024
+            # announcements are validated on the Rust side and never returned
+            # back. They ar either satisified or cause an immediate failure
+            # in this test we just assert announcements, we never make them, so
+            # these should fail
         npc_result = generator_condition_tester(f'({opcode.value[0]} "{message}") ')
         print(npc_result)
-        assert npc_result.error == Err.ASSERT_ANNOUNCE_CONSUMED_FAILED.value
-        assert npc_result.npc_list == []
+            assert npc_result.error == Err.ASSERT_ANNOUNCE_CONSUMED_FAILED.value
+            assert npc_result.npc_list == []
 
     def test_multiple_reserve_fee(self):
         # RESERVE_FEE
@@ -1766,7 +1766,7 @@ class TestGeneratorConditions:
             reserve_fee += int_from_bytes(c.vars[0])
 
         assert reserve_fee == 300
-        assert len(npc_result.npc_list[0].conditions[0][1]) == 1
+            assert len(npc_result.npc_list[0].conditions[0][1]) == 1
 
     def test_duplicate_outputs(self):
         # CREATE_COIN
@@ -1775,8 +1775,8 @@ class TestGeneratorConditions:
         # failure.
         puzzle_hash = "abababababababababababababababab"
         npc_result = generator_condition_tester(f'(51 "{puzzle_hash}" 10) ' * 2)
-        assert npc_result.error == Err.DUPLICATE_OUTPUT.value
-        assert npc_result.npc_list == []
+            assert npc_result.error == Err.DUPLICATE_OUTPUT.value
+            assert npc_result.npc_list == []
 
     def test_create_coin_cost(self):
         # CREATE_COIN
@@ -1892,15 +1892,15 @@ class TestGeneratorConditions:
         [True, False],
     )
     def test_unknown_condition(self, safe_mode):
-        for c in ['(1 100 "foo" "bar")', "(100)", "(1 1) (2 2) (3 3)", '("foobar")']:
+            for c in ['(1 100 "foo" "bar")', "(100)", "(1 1) (2 2) (3 3)", '("foobar")']:
             npc_result = generator_condition_tester(c, safe_mode=safe_mode)
-            print(npc_result)
+                print(npc_result)
             if safe_mode:
-                assert npc_result.error == Err.INVALID_CONDITION.value
-                assert npc_result.npc_list == []
-            else:
-                assert npc_result.error is None
-                assert npc_result.npc_list[0].conditions == []
+                    assert npc_result.error == Err.INVALID_CONDITION.value
+                    assert npc_result.npc_list == []
+                else:
+                    assert npc_result.error is None
+                    assert npc_result.npc_list[0].conditions == []
 
 
 # the tests below are malicious generator programs

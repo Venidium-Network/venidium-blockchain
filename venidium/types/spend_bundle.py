@@ -6,11 +6,11 @@ from typing import List
 
 from blspy import AugSchemeMPL, G2Element
 
-from chia.consensus.default_constants import DEFAULT_CONSTANTS
-from chia.types.blockchain_format.coin import Coin
-from chia.types.blockchain_format.sized_bytes import bytes32
-from chia.util.streamable import Streamable, dataclass_from_dict, recurse_jsonify, streamable
-from chia.wallet.util.debug_spend_bundle import debug_spend_bundle
+from venidium.consensus.default_constants import DEFAULT_CONSTANTS
+from venidium.types.blockchain_format.coin import Coin
+from venidium.types.blockchain_format.sized_bytes import bytes32
+from venidium.util.streamable import Streamable, dataclass_from_dict, recurse_jsonify, streamable
+from venidium.wallet.util.debug_spend_bundle import debug_spend_bundle
 
 from .coin_spend import CoinSpend
 

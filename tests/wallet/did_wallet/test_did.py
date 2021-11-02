@@ -1,14 +1,14 @@
 import asyncio
 import pytest
-from chia.simulator.simulator_protocol import FarmNewBlockProtocol
-from chia.types.peer_info import PeerInfo
-from chia.util.ints import uint16, uint32, uint64
+from venidium.simulator.simulator_protocol import FarmNewBlockProtocol
+from venidium.types.peer_info import PeerInfo
+from venidium.util.ints import uint16, uint32, uint64
 from tests.setup_nodes import setup_simulators_and_wallets
-from chia.wallet.did_wallet.did_wallet import DIDWallet
-from chia.types.blockchain_format.program import Program
+from venidium.wallet.did_wallet.did_wallet import DIDWallet
+from venidium.types.blockchain_format.program import Program
 from blspy import AugSchemeMPL
-from chia.types.spend_bundle import SpendBundle
-from chia.consensus.block_rewards import calculate_pool_reward, calculate_base_farmer_reward
+from venidium.types.spend_bundle import SpendBundle
+from venidium.consensus.block_rewards import calculate_pool_reward, calculate_base_farmer_reward
 from tests.time_out_assert import time_out_assert
 
 

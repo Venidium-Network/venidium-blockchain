@@ -10,8 +10,8 @@ from concurrent.futures.thread import ThreadPoolExecutor
 from blspy import G1Element
 from chiapos import DiskProver
 
-from chia.consensus.pos_quality import UI_ACTUAL_SPACE_CONSTANT_FACTOR, _expected_plot_size
-from chia.plotting.util import (
+from venidium.consensus.pos_quality import UI_ACTUAL_SPACE_CONSTANT_FACTOR, _expected_plot_size
+from venidium.plotting.util import (
     PlotInfo,
     PlotRefreshResult,
     PlotsRefreshParameter,
@@ -21,12 +21,12 @@ from chia.plotting.util import (
     stream_plot_info_pk,
     stream_plot_info_ph,
 )
-from chia.util.ints import uint16
-from chia.util.path import mkdir
-from chia.util.streamable import Streamable, streamable
-from chia.types.blockchain_format.proof_of_space import ProofOfSpace
-from chia.types.blockchain_format.sized_bytes import bytes32
-from chia.wallet.derive_keys import master_sk_to_local_sk
+from venidium.util.ints import uint16
+from venidium.util.path import mkdir
+from venidium.util.streamable import Streamable, streamable
+from venidium.types.blockchain_format.proof_of_space import ProofOfSpace
+from venidium.types.blockchain_format.sized_bytes import bytes32
+from venidium.wallet.derive_keys import master_sk_to_local_sk
 
 log = logging.getLogger(__name__)
 
@@ -296,39 +296,39 @@ class PlotManager:
                 return None
             if not file_path.exists():
                 return None
-            if (
-                file_path in self.failed_to_open_filenames
+                if (
+                    file_path in self.failed_to_open_filenames
                 and (time.time() - self.failed_to_open_filenames[file_path])
                 < self.refresh_parameter.retry_invalid_seconds
-            ):
+                ):
                 # Try once every `refresh_parameter.retry_invalid_seconds` seconds to open the file
                 return None
 
-            if file_path in self.plots:
+                if file_path in self.plots:
                 return self.plots[file_path]
 
-            entry: Optional[Tuple[str, Set[str]]] = self.plot_filename_paths.get(file_path.name)
-            if entry is not None:
-                loaded_parent, duplicates = entry
-                if str(file_path.parent) in duplicates:
-                    log.debug(f"Skip duplicated plot {str(file_path)}")
+                entry: Optional[Tuple[str, Set[str]]] = self.plot_filename_paths.get(file_path.name)
+                if entry is not None:
+                    loaded_parent, duplicates = entry
+                    if str(file_path.parent) in duplicates:
+                        log.debug(f"Skip duplicated plot {str(file_path)}")
                     return None
-            try:
-                prover = DiskProver(str(file_path))
+                try:
+                    prover = DiskProver(str(file_path))
 
-                log.debug(f"process_file {str(file_path)}")
+                    log.debug(f"process_file {str(file_path)}")
 
-                expected_size = _expected_plot_size(prover.get_size()) * UI_ACTUAL_SPACE_CONSTANT_FACTOR
-                stat_info = file_path.stat()
+                    expected_size = _expected_plot_size(prover.get_size()) * UI_ACTUAL_SPACE_CONSTANT_FACTOR
+                    stat_info = file_path.stat()
 
-                # TODO: consider checking if the file was just written to (which would mean that the file is still
-                # being copied). A segfault might happen in this edge case.
+                    # TODO: consider checking if the file was just written to (which would mean that the file is still
+                    # being copied). A segfault might happen in this edge case.
 
-                if prover.get_size() >= 30 and stat_info.st_size < 0.98 * expected_size:
-                    log.warning(
-                        f"Not farming plot {file_path}. Size is {stat_info.st_size / (1024**3)} GiB, but expected"
-                        f" at least: {expected_size / (1024 ** 3)} GiB. We assume the file is being copied."
-                    )
+                    if prover.get_size() >= 30 and stat_info.st_size < 0.98 * expected_size:
+                        log.warning(
+                            f"Not farming plot {file_path}. Size is {stat_info.st_size / (1024**3)} GiB, but expected"
+                            f" at least: {expected_size / (1024 ** 3)} GiB. We assume the file is being copied."
+                        )
                     return None
 
                 cache_entry = self.cache.get(prover.get_id())
@@ -369,46 +369,46 @@ class PlotManager:
                     cache_entry = CacheEntry(pool_public_key, pool_contract_puzzle_hash, plot_public_key)
                     self.cache.update(prover.get_id(), cache_entry)
 
-                with self.plot_filename_paths_lock:
+                    with self.plot_filename_paths_lock:
                     paths: Optional[Tuple[str, Set[str]]] = self.plot_filename_paths.get(file_path.name)
                     if paths is None:
                         paths = (str(Path(prover.get_filename()).parent), set())
                         self.plot_filename_paths[file_path.name] = paths
-                    else:
+                        else:
                         paths[1].add(str(Path(prover.get_filename()).parent))
                         log.warning(f"Have multiple copies of the plot {file_path.name} in {[paths[0], *paths[1]]}.")
                         return None
 
                 new_plot_info: PlotInfo = PlotInfo(
-                    prover,
+                        prover,
                     cache_entry.pool_public_key,
                     cache_entry.pool_contract_puzzle_hash,
                     cache_entry.plot_public_key,
-                    stat_info.st_size,
-                    stat_info.st_mtime,
-                )
+                        stat_info.st_size,
+                        stat_info.st_mtime,
+                    )
 
-                with counter_lock:
+                    with counter_lock:
                     result.loaded += 1
 
                 if file_path in self.failed_to_open_filenames:
                     del self.failed_to_open_filenames[file_path]
 
-            except Exception as e:
-                tb = traceback.format_exc()
-                log.error(f"Failed to open file {file_path}. {e} {tb}")
-                self.failed_to_open_filenames[file_path] = int(time.time())
+                except Exception as e:
+                    tb = traceback.format_exc()
+                    log.error(f"Failed to open file {file_path}. {e} {tb}")
+                    self.failed_to_open_filenames[file_path] = int(time.time())
                 return None
             log.info(f"Found plot {file_path} of size {new_plot_info.prover.get_size()}")
 
-            if self.show_memo:
-                plot_memo: bytes32
-                if pool_contract_puzzle_hash is None:
-                    plot_memo = stream_plot_info_pk(pool_public_key, farmer_public_key, local_master_sk)
-                else:
-                    plot_memo = stream_plot_info_ph(pool_contract_puzzle_hash, farmer_public_key, local_master_sk)
-                plot_memo_str: str = plot_memo.hex()
-                log.info(f"Memo: {plot_memo_str}")
+                if self.show_memo:
+                    plot_memo: bytes32
+                    if pool_contract_puzzle_hash is None:
+                        plot_memo = stream_plot_info_pk(pool_public_key, farmer_public_key, local_master_sk)
+                    else:
+                        plot_memo = stream_plot_info_ph(pool_contract_puzzle_hash, farmer_public_key, local_master_sk)
+                    plot_memo_str: str = plot_memo.hex()
+                    log.info(f"Memo: {plot_memo_str}")
 
             return new_plot_info
 

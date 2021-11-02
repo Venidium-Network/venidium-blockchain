@@ -6,22 +6,22 @@ from typing import Dict, List, Optional, Tuple
 import aiosqlite
 import pytest
 
-from chia.consensus.block_header_validation import validate_finished_header_block
-from chia.consensus.block_record import BlockRecord
-from chia.consensus.blockchain import Blockchain
-from chia.consensus.default_constants import DEFAULT_CONSTANTS
-from chia.consensus.difficulty_adjustment import get_next_sub_slot_iters_and_difficulty
-from chia.consensus.full_block_to_block_record import block_to_block_record
-from chia.full_node.block_store import BlockStore
-from chia.full_node.coin_store import CoinStore
-from chia.server.start_full_node import SERVICE_NAME
-from chia.types.blockchain_format.sized_bytes import bytes32
-from chia.types.blockchain_format.sub_epoch_summary import SubEpochSummary
-from chia.util.block_cache import BlockCache
+from venidium.consensus.block_header_validation import validate_finished_header_block
+from venidium.consensus.block_record import BlockRecord
+from venidium.consensus.blockchain import Blockchain
+from venidium.consensus.default_constants import DEFAULT_CONSTANTS
+from venidium.consensus.difficulty_adjustment import get_next_sub_slot_iters_and_difficulty
+from venidium.consensus.full_block_to_block_record import block_to_block_record
+from venidium.full_node.block_store import BlockStore
+from venidium.full_node.coin_store import CoinStore
+from venidium.server.start_full_node import SERVICE_NAME
+from venidium.types.blockchain_format.sized_bytes import bytes32
+from venidium.types.blockchain_format.sub_epoch_summary import SubEpochSummary
+from venidium.util.block_cache import BlockCache
 from tests.block_tools import test_constants
-from chia.util.config import load_config
-from chia.util.default_root import DEFAULT_ROOT_PATH
-from chia.util.generator_tools import get_block_header
+from venidium.util.config import load_config
+from venidium.util.default_root import DEFAULT_ROOT_PATH
+from venidium.util.generator_tools import get_block_header
 from tests.setup_nodes import bt
 
 try:
@@ -30,16 +30,16 @@ except ImportError:
     pass
 
 
-from chia.consensus.pot_iterations import calculate_iterations_quality
-from chia.full_node.weight_proof import (  # type: ignore
+from venidium.consensus.pot_iterations import calculate_iterations_quality
+from venidium.full_node.weight_proof import (  # type: ignore
     WeightProofHandler,
     _map_sub_epoch_summaries,
     _validate_sub_epoch_segments,
     _validate_summaries_weight,
 )
-from chia.types.full_block import FullBlock
-from chia.types.header_block import HeaderBlock
-from chia.util.ints import uint32, uint64
+from venidium.types.full_block import FullBlock
+from venidium.types.header_block import HeaderBlock
+from venidium.util.ints import uint32, uint64
 
 
 @pytest.fixture(scope="session")

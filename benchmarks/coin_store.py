@@ -3,18 +3,18 @@ import random
 import secrets
 from time import time
 from pathlib import Path
-from chia.full_node.coin_store import CoinStore
+from venidium.full_node.coin_store import CoinStore
 from typing import List, Tuple
 import os
 import sys
 
 import aiosqlite
-from chia.util.db_wrapper import DBWrapper
-from chia.consensus.coinbase import create_farmer_coin, create_pool_coin
-from chia.consensus.default_constants import DEFAULT_CONSTANTS
-from chia.types.blockchain_format.sized_bytes import bytes32
-from chia.types.blockchain_format.coin import Coin
-from chia.util.ints import uint64, uint32
+from venidium.util.db_wrapper import DBWrapper
+from venidium.consensus.coinbase import create_farmer_coin, create_pool_coin
+from venidium.consensus.default_constants import DEFAULT_CONSTANTS
+from venidium.types.blockchain_format.sized_bytes import bytes32
+from venidium.types.blockchain_format.coin import Coin
+from venidium.util.ints import uint64, uint32
 
 
 NUM_ITERS = 200

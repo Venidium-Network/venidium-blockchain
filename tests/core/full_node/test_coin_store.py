@@ -4,22 +4,22 @@ from typing import List, Optional, Set, Tuple
 
 import pytest
 
-from chia.consensus.block_rewards import calculate_base_farmer_reward, calculate_pool_reward
-from chia.consensus.blockchain import Blockchain, ReceiveBlockResult
-from chia.consensus.coinbase import create_farmer_coin, create_pool_coin
-from chia.full_node.block_store import BlockStore
-from chia.full_node.coin_store import CoinStore
-from chia.full_node.hint_store import HintStore
-from chia.full_node.mempool_check_conditions import get_name_puzzle_conditions
-from chia.types.blockchain_format.coin import Coin
-from chia.types.coin_record import CoinRecord
-from chia.types.full_block import FullBlock
-from chia.types.generator_types import BlockGenerator
-from chia.util.generator_tools import tx_removals_and_additions
-from chia.util.ints import uint64, uint32
+from venidium.consensus.block_rewards import calculate_base_farmer_reward, calculate_pool_reward
+from venidium.consensus.blockchain import Blockchain, ReceiveBlockResult
+from venidium.consensus.coinbase import create_farmer_coin, create_pool_coin
+from venidium.full_node.block_store import BlockStore
+from venidium.full_node.coin_store import CoinStore
+from venidium.full_node.hint_store import HintStore
+from venidium.full_node.mempool_check_conditions import get_name_puzzle_conditions
+from venidium.types.blockchain_format.coin import Coin
+from venidium.types.coin_record import CoinRecord
+from venidium.types.full_block import FullBlock
+from venidium.types.generator_types import BlockGenerator
+from venidium.util.generator_tools import tx_removals_and_additions
+from venidium.util.ints import uint64, uint32
 from tests.wallet_tools import WalletTool
 from tests.setup_nodes import bt, test_constants
-from chia.types.blockchain_format.sized_bytes import bytes32
+from venidium.types.blockchain_format.sized_bytes import bytes32
 from tests.util.db_connection import DBConnection
 
 

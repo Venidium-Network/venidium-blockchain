@@ -2,11 +2,11 @@ import click
 import colorama
 import sys
 
-from chia.daemon.client import acquire_connection_to_daemon
-from chia.util.keychain import Keychain, obtain_current_passphrase, supports_os_passphrase_storage
-from chia.util.keyring_wrapper import DEFAULT_PASSPHRASE_IF_NO_MASTER_PASSPHRASE
-from chia.util.misc import prompt_yes_no
-from chia.util.ws_message import WsRpcMessage
+from venidium.daemon.client import acquire_connection_to_daemon
+from venidium.util.keychain import Keychain, obtain_current_passphrase, supports_os_passphrase_storage
+from venidium.util.keyring_wrapper import DEFAULT_PASSPHRASE_IF_NO_MASTER_PASSPHRASE
+from venidium.util.misc import prompt_yes_no
+from venidium.util.ws_message import WsRpcMessage
 from getpass import getpass
 from io import TextIOWrapper
 from pathlib import Path
@@ -81,7 +81,7 @@ def prompt_to_save_passphrase() -> bool:
             print(
                 "\n"
                 "Your passphrase can be stored in your system's secure credential store. "
-                "Other Chia processes will be able to access your keys without prompting for your passphrase."
+                "Other Venidium processes will be able to access your keys without prompting for your passphrase."
             )
             if warning is not None:
                 colorama.init()
@@ -126,7 +126,7 @@ def read_passphrase_from_file(passphrase_file: TextIOWrapper) -> str:
 def initialize_passphrase() -> None:
     if Keychain.has_master_passphrase():
         print("Keyring is already protected by a passphrase")
-        print("\nUse 'chia passphrase set' or 'chia passphrase remove' to update or remove your passphrase")
+        print("\nUse 'venidium passphrase set' or 'venidium passphrase remove' to update or remove your passphrase")
         sys.exit(1)
 
     # We'll rely on Keyring initialization to leverage the cached passphrase for

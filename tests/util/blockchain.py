@@ -5,14 +5,14 @@ from typing import List
 
 import aiosqlite
 
-from chia.consensus.blockchain import Blockchain
-from chia.consensus.constants import ConsensusConstants
-from chia.full_node.block_store import BlockStore
-from chia.full_node.coin_store import CoinStore
-from chia.full_node.hint_store import HintStore
-from chia.types.full_block import FullBlock
-from chia.util.db_wrapper import DBWrapper
-from chia.util.path import mkdir
+from venidium.consensus.blockchain import Blockchain
+from venidium.consensus.constants import ConsensusConstants
+from venidium.full_node.block_store import BlockStore
+from venidium.full_node.coin_store import CoinStore
+from venidium.full_node.hint_store import HintStore
+from venidium.types.full_block import FullBlock
+from venidium.util.db_wrapper import DBWrapper
+from venidium.util.path import mkdir
 
 from tests.setup_nodes import bt
 
@@ -47,8 +47,8 @@ def persistent_blocks(
 ):
     # try loading from disc, if not create new blocks.db file
     # TODO hash fixtures.py and blocktool.py, add to path, delete if the files changed
-    block_path_dir = Path("~/.chia/blocks").expanduser()
-    file_path = Path(f"~/.chia/blocks/{db_name}").expanduser()
+    block_path_dir = Path("~/.venidium/blocks").expanduser()
+    file_path = Path(f"~/.venidium/blocks/{db_name}").expanduser()
     if not path.exists(block_path_dir):
         mkdir(block_path_dir.parent)
         mkdir(block_path_dir)

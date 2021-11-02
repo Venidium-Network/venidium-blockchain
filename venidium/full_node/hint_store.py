@@ -1,7 +1,7 @@
 from typing import List, Tuple
 import aiosqlite
-from chia.types.blockchain_format.sized_bytes import bytes32
-from chia.util.db_wrapper import DBWrapper
+from venidium.types.blockchain_format.sized_bytes import bytes32
+from venidium.util.db_wrapper import DBWrapper
 import logging
 
 log = logging.getLogger(__name__)

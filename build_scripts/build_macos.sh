@@ -47,13 +47,13 @@ if [ "$LAST_EXIT_CODE" -ne 0 ]; then
 	exit $LAST_EXIT_CODE
 fi
 
-# sets the version for chia-blockchain in package.json
+# sets the version for venidium-blockchain in package.json
 brew install jq
 cp package.json package.json.orig
 jq --arg VER "$VENIDIUM_INSTALLER_VERSION" '.version=$VER' package.json > temp.json && mv temp.json package.json
 
 electron-packager . Venidium --asar.unpack="**/daemon/**" --platform=darwin \
---icon=src/assets/img/Venidium.icns --overwrite --app-bundle-id=net.chia.blockchain \
+--icon=src/assets/img/Venidium.icns --overwrite --app-bundle-id=io.venidium.blockchain \
 --appVersion=$VENIDIUM_INSTALLER_VERSION
 LAST_EXIT_CODE=$?
 
@@ -94,7 +94,7 @@ fi
 if [ "$NOTARIZE" == true ]; then
 	echo "Notarize $DMG_NAME on ci"
 	cd final_installer || exit
-  notarize-cli --file=$DMG_NAME --bundle-id net.venidium.blockchain \
+  notarize-cli --file=$DMG_NAME --bundle-id io.venidium.blockchain \
 	--username "$APPLE_NOTARIZE_USERNAME" --password "$APPLE_NOTARIZE_PASSWORD"
   echo "Notarization step complete"
 else
@@ -105,7 +105,7 @@ fi
 #
 # Ask for username and password. password should be an app specific password.
 # Generate app specific password https://support.apple.com/en-us/HT204397
-# xcrun altool --notarize-app -f Venidium-0.1.X.dmg --primary-bundle-id net.venidium.blockchain -u username -p password
+# xcrun altool --notarize-app -f Venidium-0.1.X.dmg --primary-bundle-id io.venidium.blockchain -u username -p password
 # xcrun altool --notarize-app; -should return REQUEST-ID, use it in next command
 #
 # Wait until following command return a success message".

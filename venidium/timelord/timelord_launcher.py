@@ -8,12 +8,12 @@ from typing import Dict, List
 
 import pkg_resources
 
-from chia.types.peer_info import PeerInfo
-from chia.util.chia_logging import initialize_logging
-from chia.util.config import load_config
-from chia.util.default_root import DEFAULT_ROOT_PATH
-from chia.util.ints import uint16
-from chia.util.setproctitle import setproctitle
+from venidium.types.peer_info import PeerInfo
+from venidium.util.venidium_logging import initialize_logging
+from venidium.util.config import load_config
+from venidium.util.default_root import DEFAULT_ROOT_PATH
+from venidium.util.ints import uint16
+from venidium.util.setproctitle import setproctitle
 
 active_processes: List = []
 stopped = False
@@ -94,7 +94,7 @@ async def spawn_all_processes(config: Dict, net_config: Dict):
 
 def main():
     root_path = DEFAULT_ROOT_PATH
-    setproctitle("chia_timelord_launcher")
+    setproctitle("venidium_timelord_launcher")
     net_config = load_config(root_path, "config.yaml")
     config = net_config["timelord_launcher"]
     initialize_logging("TLauncher", config["logging"], root_path)

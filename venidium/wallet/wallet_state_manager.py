@@ -12,56 +12,56 @@ from blspy import AugSchemeMPL, G1Element, PrivateKey
 from chiabip158 import PyBIP158
 from cryptography.fernet import Fernet
 
-from chia import __version__
-from chia.consensus.block_record import BlockRecord
-from chia.consensus.coinbase import pool_parent_id, farmer_parent_id
-from chia.consensus.constants import ConsensusConstants
-from chia.consensus.find_fork_point import find_fork_point_in_chain
-from chia.full_node.weight_proof import WeightProofHandler
-from chia.pools.pool_puzzles import SINGLETON_LAUNCHER_HASH, solution_to_pool_state
-from chia.pools.pool_wallet import PoolWallet
-from chia.protocols.wallet_protocol import PuzzleSolutionResponse, RespondPuzzleSolution
-from chia.types.blockchain_format.coin import Coin
-from chia.types.blockchain_format.program import Program
-from chia.types.blockchain_format.sized_bytes import bytes32
-from chia.types.coin_spend import CoinSpend
-from chia.types.full_block import FullBlock
-from chia.types.header_block import HeaderBlock
-from chia.types.mempool_inclusion_status import MempoolInclusionStatus
-from chia.util.byte_types import hexstr_to_bytes
-from chia.util.db_wrapper import DBWrapper
-from chia.util.errors import Err
-from chia.util.hash import std_hash
-from chia.util.ints import uint32, uint64, uint128
-from chia.util.db_synchronous import db_synchronous_on
-from chia.wallet.block_record import HeaderBlockRecord
-from chia.wallet.cc_wallet.cc_wallet import CCWallet
-from chia.wallet.derivation_record import DerivationRecord
-from chia.wallet.derive_keys import master_sk_to_backup_sk, master_sk_to_wallet_sk
-from chia.wallet.key_val_store import KeyValStore
-from chia.wallet.rl_wallet.rl_wallet import RLWallet
-from chia.wallet.settings.user_settings import UserSettings
-from chia.wallet.trade_manager import TradeManager
-from chia.wallet.transaction_record import TransactionRecord
-from chia.wallet.util.backup_utils import open_backup_file
-from chia.wallet.util.transaction_type import TransactionType
-from chia.wallet.util.wallet_types import WalletType
-from chia.wallet.wallet import Wallet
-from chia.wallet.wallet_action import WalletAction
-from chia.wallet.wallet_action_store import WalletActionStore
-from chia.wallet.wallet_block_store import WalletBlockStore
-from chia.wallet.wallet_blockchain import WalletBlockchain
-from chia.wallet.wallet_coin_record import WalletCoinRecord
-from chia.wallet.wallet_coin_store import WalletCoinStore
-from chia.wallet.wallet_info import WalletInfo, WalletInfoBackup
-from chia.wallet.wallet_interested_store import WalletInterestedStore
-from chia.wallet.wallet_pool_store import WalletPoolStore
-from chia.wallet.wallet_puzzle_store import WalletPuzzleStore
-from chia.wallet.wallet_sync_store import WalletSyncStore
-from chia.wallet.wallet_transaction_store import WalletTransactionStore
-from chia.wallet.wallet_user_store import WalletUserStore
-from chia.server.server import ChiaServer
-from chia.wallet.did_wallet.did_wallet import DIDWallet
+from venidium import __version__
+from venidium.consensus.block_record import BlockRecord
+from venidium.consensus.coinbase import pool_parent_id, farmer_parent_id
+from venidium.consensus.constants import ConsensusConstants
+from venidium.consensus.find_fork_point import find_fork_point_in_chain
+from venidium.full_node.weight_proof import WeightProofHandler
+from venidium.pools.pool_puzzles import SINGLETON_LAUNCHER_HASH, solution_to_pool_state
+from venidium.pools.pool_wallet import PoolWallet
+from venidium.protocols.wallet_protocol import PuzzleSolutionResponse, RespondPuzzleSolution
+from venidium.types.blockchain_format.coin import Coin
+from venidium.types.blockchain_format.program import Program
+from venidium.types.blockchain_format.sized_bytes import bytes32
+from venidium.types.coin_spend import CoinSpend
+from venidium.types.full_block import FullBlock
+from venidium.types.header_block import HeaderBlock
+from venidium.types.mempool_inclusion_status import MempoolInclusionStatus
+from venidium.util.byte_types import hexstr_to_bytes
+from venidium.util.db_wrapper import DBWrapper
+from venidium.util.errors import Err
+from venidium.util.hash import std_hash
+from venidium.util.ints import uint32, uint64, uint128
+from venidium.util.db_synchronous import db_synchronous_on
+from venidium.wallet.block_record import HeaderBlockRecord
+from venidium.wallet.cc_wallet.cc_wallet import CCWallet
+from venidium.wallet.derivation_record import DerivationRecord
+from venidium.wallet.derive_keys import master_sk_to_backup_sk, master_sk_to_wallet_sk
+from venidium.wallet.key_val_store import KeyValStore
+from venidium.wallet.rl_wallet.rl_wallet import RLWallet
+from venidium.wallet.settings.user_settings import UserSettings
+from venidium.wallet.trade_manager import TradeManager
+from venidium.wallet.transaction_record import TransactionRecord
+from venidium.wallet.util.backup_utils import open_backup_file
+from venidium.wallet.util.transaction_type import TransactionType
+from venidium.wallet.util.wallet_types import WalletType
+from venidium.wallet.wallet import Wallet
+from venidium.wallet.wallet_action import WalletAction
+from venidium.wallet.wallet_action_store import WalletActionStore
+from venidium.wallet.wallet_block_store import WalletBlockStore
+from venidium.wallet.wallet_blockchain import WalletBlockchain
+from venidium.wallet.wallet_coin_record import WalletCoinRecord
+from venidium.wallet.wallet_coin_store import WalletCoinStore
+from venidium.wallet.wallet_info import WalletInfo, WalletInfoBackup
+from venidium.wallet.wallet_interested_store import WalletInterestedStore
+from venidium.wallet.wallet_pool_store import WalletPoolStore
+from venidium.wallet.wallet_puzzle_store import WalletPuzzleStore
+from venidium.wallet.wallet_sync_store import WalletSyncStore
+from venidium.wallet.wallet_transaction_store import WalletTransactionStore
+from venidium.wallet.wallet_user_store import WalletUserStore
+from venidium.server.server import VenidiumServer
+from venidium.wallet.did_wallet.did_wallet import DIDWallet
 
 
 def get_balance_from_coin_records(coin_records: Set[WalletCoinRecord]) -> uint128:
@@ -115,7 +115,7 @@ class WalletStateManager:
     interested_store: WalletInterestedStore
     pool_store: WalletPoolStore
     weight_proof_handler: Any
-    server: ChiaServer
+    server: VenidiumServer
     root_path: Path
 
     @staticmethod
@@ -124,7 +124,7 @@ class WalletStateManager:
         config: Dict,
         db_path: Path,
         constants: ConsensusConstants,
-        server: ChiaServer,
+        server: VenidiumServer,
         root_path: Path,
         name: str = None,
     ):

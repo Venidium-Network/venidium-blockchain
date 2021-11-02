@@ -5,27 +5,27 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import yaml
 
-from chia import __version__
-from chia.consensus.coinbase import create_puzzlehash_for_pk
-from chia.ssl.create_ssl import (
+from venidium import __version__
+from venidium.consensus.coinbase import create_puzzlehash_for_pk
+from venidium.ssl.create_ssl import (
     ensure_ssl_dirs,
     generate_ca_signed_cert,
-    get_chia_ca_crt_key,
+    get_venidium_ca_crt_key,
     make_ca_cert,
     write_ssl_cert_and_key,
 )
-from chia.util.bech32m import encode_puzzle_hash
-from chia.util.config import (
-    create_default_chia_config,
+from venidium.util.bech32m import encode_puzzle_hash
+from venidium.util.config import (
+    create_default_venidium_config,
     initial_config_file,
     load_config,
     save_config,
     unflatten_properties,
 )
-from chia.util.ints import uint32
-from chia.util.keychain import Keychain
-from chia.util.path import mkdir
-from chia.util.ssl_check import (
+from venidium.util.ints import uint32
+from venidium.util.keychain import Keychain
+from venidium.util.path import mkdir
+from venidium.util.ssl_check import (
     DEFAULT_PERMISSIONS_CERT_FILE,
     DEFAULT_PERMISSIONS_KEY_FILE,
     RESTRICT_MASK_CERT_FILE,
@@ -33,7 +33,7 @@ from chia.util.ssl_check import (
     check_and_fix_permissions_for_ssl_file,
     fix_ssl,
 )
-from chia.wallet.derive_keys import master_sk_to_pool_sk, master_sk_to_wallet_sk
+from venidium.wallet.derive_keys import master_sk_to_pool_sk, master_sk_to_wallet_sk
 
 private_node_names = {"full_node", "wallet", "farmer", "harvester", "timelord", "daemon"}
 public_node_names = {"full_node", "wallet", "farmer", "introducer", "timelord"}
@@ -65,7 +65,7 @@ def check_keys(new_root: Path, keychain: Optional[Keychain] = None) -> None:
         keychain = Keychain()
     all_sks = keychain.get_all_private_keys()
     if len(all_sks) == 0:
-        print("No keys are present in the keychain. Generate them with 'chia keys generate'")
+        print("No keys are present in the keychain. Generate them with 'venidium keys generate'")
         return None
 
     config: Dict = load_config(new_root, "config.yaml")
@@ -198,10 +198,10 @@ def create_all_ssl(root_path: Path):
 
     private_ca_key_path = ca_dir / "private_ca.key"
     private_ca_crt_path = ca_dir / "private_ca.crt"
-    chia_ca_crt, chia_ca_key = get_chia_ca_crt_key()
-    chia_ca_crt_path = ca_dir / "chia_ca.crt"
-    chia_ca_key_path = ca_dir / "chia_ca.key"
-    write_ssl_cert_and_key(chia_ca_crt_path, chia_ca_crt, chia_ca_key_path, chia_ca_key)
+    venidium_ca_crt, venidium_ca_key = get_venidium_ca_crt_key()
+    venidium_ca_crt_path = ca_dir / "venidium_ca.crt"
+    venidium_ca_key_path = ca_dir / "venidium_ca.key"
+    write_ssl_cert_and_key(venidium_ca_crt_path, venidium_ca_crt, venidium_ca_key_path, venidium_ca_key)
 
     if not private_ca_key_path.exists() or not private_ca_crt_path.exists():
         # Create private CA
@@ -218,8 +218,8 @@ def create_all_ssl(root_path: Path):
         ca_crt = private_ca_crt_path.read_bytes()
         generate_ssl_for_nodes(ssl_dir, ca_crt, ca_key, True)
 
-    chia_ca_crt, chia_ca_key = get_chia_ca_crt_key()
-    generate_ssl_for_nodes(ssl_dir, chia_ca_crt, chia_ca_key, False, overwrite=False)
+    venidium_ca_crt, venidium_ca_key = get_venidium_ca_crt_key()
+    generate_ssl_for_nodes(ssl_dir, venidium_ca_crt, venidium_ca_key, False, overwrite=False)
 
 
 def generate_ssl_for_nodes(ssl_dir: Path, ca_crt: bytes, ca_key: bytes, private: bool, overwrite=True):
@@ -270,16 +270,16 @@ def init(create_certs: Optional[Path], root_path: Path, fix_ssl_permissions: boo
         else:
             print(f"** {root_path} does not exist. Executing core init **")
             # sanity check here to prevent infinite recursion
-            if chia_init(root_path, fix_ssl_permissions=fix_ssl_permissions) == 0 and root_path.exists():
+            if venidium_init(root_path, fix_ssl_permissions=fix_ssl_permissions) == 0 and root_path.exists():
                 return init(create_certs, root_path, fix_ssl_permissions)
 
             print(f"** {root_path} was not created. Exiting **")
             return -1
     else:
-        return chia_init(root_path, fix_ssl_permissions=fix_ssl_permissions)
+        return venidium_init(root_path, fix_ssl_permissions=fix_ssl_permissions)
 
 
-def chia_version_number() -> Tuple[str, str, str, str]:
+def venidium_version_number() -> Tuple[str, str, str, str]:
     scm_full_version = __version__
     left_full_version = scm_full_version.split("+")
 
@@ -327,18 +327,18 @@ def chia_version_number() -> Tuple[str, str, str, str]:
     return major_release_number, minor_release_number, patch_release_number, dev_release_number
 
 
-def chia_minor_release_number():
-    res = int(chia_version_number()[2])
+def venidium_minor_release_number():
+    res = int(venidium_version_number()[2])
     print(f"Install release number: {res}")
     return res
 
 
-def chia_full_version_str() -> str:
-    major, minor, patch, dev = chia_version_number()
+def venidium_full_version_str() -> str:
+    major, minor, patch, dev = venidium_version_number()
     return f"{major}.{minor}.{patch}{dev}"
 
 
-def chia_init(root_path: Path, *, should_check_keys: bool = True, fix_ssl_permissions: bool = False):
+def venidium_init(root_path: Path, *, should_check_keys: bool = True, fix_ssl_permissions: bool = False):
     """
     Standard first run initialization or migration steps. Handles config creation,
     generation of SSL certs, and setting target addresses (via check_keys).
@@ -347,16 +347,16 @@ def chia_init(root_path: Path, *, should_check_keys: bool = True, fix_ssl_permis
     protected Keychain. When launching the daemon from the GUI, we want the GUI to
     handle unlocking the keychain.
     """
-    if os.environ.get("CHIA_ROOT", None) is not None:
+    if os.environ.get("VENIDIUM_ROOT", None) is not None:
         print(
-            f"warning, your CHIA_ROOT is set to {os.environ['CHIA_ROOT']}. "
-            f"Please unset the environment variable and run chia init again\n"
+            f"warning, your VENIDIUM_ROOT is set to {os.environ['VENIDIUM_ROOT']}. "
+            f"Please unset the environment variable and run venidium init again\n"
             f"or manually migrate config.yaml"
         )
 
-    print(f"Chia directory {root_path}")
+    print(f"Venidium directory {root_path}")
     if root_path.is_dir() and Path(root_path / "config" / "config.yaml").exists():
-        # This is reached if CHIA_ROOT is set, or if user has run chia init twice
+        # This is reached if VENIDIUM_ROOT is set, or if user has run venidium init twice
         # before a new update.
         if fix_ssl_permissions:
             fix_ssl(root_path)
@@ -365,13 +365,13 @@ def chia_init(root_path: Path, *, should_check_keys: bool = True, fix_ssl_permis
         print(f"{root_path} already exists, no migration action taken")
         return -1
 
-    create_default_chia_config(root_path)
+    create_default_venidium_config(root_path)
     create_all_ssl(root_path)
     if fix_ssl_permissions:
         fix_ssl(root_path)
     if should_check_keys:
         check_keys(root_path)
     print("")
-    print("To see your keys, run 'chia keys show --show-mnemonic-seed'")
+    print("To see your keys, run 'venidium keys show --show-mnemonic-seed'")
 
     return 0

@@ -1,22 +1,22 @@
 from io import TextIOWrapper
 import click
 
-from chia import __version__
-from chia.cmds.configure import configure_cmd
-from chia.cmds.farm import farm_cmd
-from chia.cmds.init import init_cmd
-from chia.cmds.keys import keys_cmd
-from chia.cmds.netspace import netspace_cmd
-from chia.cmds.passphrase import passphrase_cmd
-from chia.cmds.plots import plots_cmd
-from chia.cmds.show import show_cmd
-from chia.cmds.start import start_cmd
-from chia.cmds.stop import stop_cmd
-from chia.cmds.wallet import wallet_cmd
-from chia.cmds.plotnft import plotnft_cmd
-from chia.util.default_root import DEFAULT_KEYS_ROOT_PATH, DEFAULT_ROOT_PATH
-from chia.util.keychain import set_keys_root_path, supports_keyring_passphrase
-from chia.util.ssl_check import check_ssl
+from venidium import __version__
+from venidium.cmds.configure import configure_cmd
+from venidium.cmds.farm import farm_cmd
+from venidium.cmds.init import init_cmd
+from venidium.cmds.keys import keys_cmd
+from venidium.cmds.netspace import netspace_cmd
+from venidium.cmds.passphrase import passphrase_cmd
+from venidium.cmds.plots import plots_cmd
+from venidium.cmds.show import show_cmd
+from venidium.cmds.start import start_cmd
+from venidium.cmds.stop import stop_cmd
+from venidium.cmds.wallet import wallet_cmd
+from venidium.cmds.plotnft import plotnft_cmd
+from venidium.util.default_root import DEFAULT_KEYS_ROOT_PATH, DEFAULT_ROOT_PATH
+from venidium.util.keychain import set_keys_root_path, supports_keyring_passphrase
+from venidium.util.ssl_check import check_ssl
 from typing import Optional
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
@@ -39,8 +39,8 @@ def monkey_patch_click() -> None:
 
 
 @click.group(
-    help=f"\n  Manage chia blockchain infrastructure ({__version__})\n",
-    epilog="Try 'chia start node', 'chia netspace -d 192', or 'chia show -s'",
+    help=f"\n  Manage venidium blockchain infrastructure ({__version__})\n",
+    epilog="Try 'venidium start node', 'venidium netspace -d 192', or 'venidium show -s'",
     context_settings=CONTEXT_SETTINGS,
 )
 @click.option("--root-path", default=DEFAULT_ROOT_PATH, help="Config file root", type=click.Path(), show_default=True)
@@ -77,30 +77,30 @@ def cli(
 
 
 if not supports_keyring_passphrase():
-    from chia.cmds.passphrase_funcs import remove_passphrase_options_from_cmd
+    from venidium.cmds.passphrase_funcs import remove_passphrase_options_from_cmd
 
     # TODO: Remove once keyring passphrase management is rolled out to all platforms
     remove_passphrase_options_from_cmd(cli)
 
 
-@cli.command("version", short_help="Show chia version")
+@cli.command("version", short_help="Show venidium version")
 def version_cmd() -> None:
     print(__version__)
 
 
-@cli.command("run_daemon", short_help="Runs chia daemon")
+@cli.command("run_daemon", short_help="Runs venidium daemon")
 @click.option(
     "--wait-for-unlock",
     help="If the keyring is passphrase-protected, the daemon will wait for an unlock command before accessing keys",
     default=False,
     is_flag=True,
-    hidden=True,  # --wait-for-unlock is only set when launched by chia start <service>
+    hidden=True,  # --wait-for-unlock is only set when launched by venidium start <service>
 )
 @click.pass_context
 def run_daemon_cmd(ctx: click.Context, wait_for_unlock: bool) -> None:
     import asyncio
-    from chia.daemon.server import async_run_daemon
-    from chia.util.keychain import Keychain
+    from venidium.daemon.server import async_run_daemon
+    from venidium.util.keychain import Keychain
 
     wait_for_unlock = wait_for_unlock and Keychain.is_keyring_locked()
 
