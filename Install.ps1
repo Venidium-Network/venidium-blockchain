@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 
 if ([Environment]::Is64BitOperatingSystem -eq $false)
 {
-    Write-Output "Chia requires a 64-bit Windows installation"
+    Write-Output "Venidium requires a 64-bit Windows installation"
     Exit 1
 }
 
@@ -47,17 +47,17 @@ py -m venv venv
 py -m pip install pip --upgrade
 pip install --upgrade setuptools
 pip install --upgrade wheel
-pip install --extra-index-url https://pypi.chia.net/simple/ miniupnpc==2.2.2
-pip install --editable . --extra-index-url https://pypi.chia.net/simple/
+pip install --extra-index-url https://pypi.venidium.io/simple/ miniupnpc==2.2.2
+pip install --editable . --extra-index-url https://pypi.venidium.io/simple/
 
 Write-Output ""
-Write-Output "Chia blockchain .\Install.ps1 complete."
-Write-Output "For assistance join us on Keybase in the #support chat channel:"
-Write-Output "https://keybase.io/team/chia_network.public"
+Write-Output "Venidium blockchain .\Install.ps1 complete."
+Write-Output "For assistance join us on Discord in the #technical-support chat channel:"
+Write-Output "https://discord.gg/PHAVtGf4gu"
 Write-Output ""
-Write-Output "Try the Quick Start Guide to running chia-blockchain:"
-Write-Output "https://github.com/Chia-Network/chia-blockchain/wiki/Quick-Start-Guide"
+Write-Output "Try the Quick Start Guide to running venidium-blockchain:"
+Write-Output "https://github.com/Venidium-Network/venidium-blockchain/blob/main/README.md"
 Write-Output ""
 Write-Output "To install the GUI type '.\Install-gui.ps1' after '.\venv\scripts\Activate.ps1'."
 Write-Output ""
-Write-Output "Type '.\venv\Scripts\Activate.ps1' and then 'chia init' to begin."
+Write-Output "Type '.\venv\Scripts\Activate.ps1' and then 'venidium init' to begin."

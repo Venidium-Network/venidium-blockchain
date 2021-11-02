@@ -92,7 +92,7 @@ def configure(
     if testnet is not None:
         if testnet == "true" or testnet == "t":
             print("Setting Testnet")
-            testnet_port = "55944"
+            testnet_port = "55744"
             testnet_introducer = "beta1_introducer.venidium.io"
             testnet_dns_introducer = "dns-introducer-kition.venidium.io"
             testnet = "kition"
@@ -119,7 +119,7 @@ def configure(
 
         elif testnet == "false" or testnet == "f":
             print("Setting Mainnet")
-            mainnet_port = "5944"
+            mainnet_port = "5744"
             mainnet_introducer = "introducer.venidium.io"
             mainnet_dns_introducer = "dns-introducer.venidium.io"
             net = "mainnet"

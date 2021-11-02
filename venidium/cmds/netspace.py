@@ -10,7 +10,7 @@ import click
     help=(
         "Set the port where the Full Node is hosting the RPC interface. "
         "See the rpc_port under full_node in config.yaml. "
-        "[default: 6055]"
+        "[default: 5855]"
     ),
     type=int,
     default=None,
