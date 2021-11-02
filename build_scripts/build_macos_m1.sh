@@ -98,7 +98,7 @@ ls -lh final_installer
 if [ "$NOTARIZE" ]; then
 	echo "Notarize $DMG_NAME on ci"
 	cd final_installer || exit
-  notarize-cli --file=$DMG_NAME --bundle-id net.venidium.blockchain \
+  notarize-cli --file=$DMG_NAME --bundle-id io.venidium.blockchain \
 	--username "$APPLE_NOTARIZE_USERNAME" --password "$APPLE_NOTARIZE_PASSWORD"
   echo "Notarization step complete"
 else

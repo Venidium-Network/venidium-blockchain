@@ -61,7 +61,7 @@ cp package.json package.json.orig
 jq --arg VER "$VENIDIUM_INSTALLER_VERSION" '.version=$VER' package.json > temp.json && mv temp.json package.json
 
 electron-packager . venidium-blockchain --asar.unpack="**/daemon/**" --platform=linux \
---icon=src/assets/img/Venidium.icns --overwrite --app-bundle-id=net.venidium.blockchain \
+--icon=src/assets/img/Venidium.icns --overwrite --app-bundle-id=io.venidium.blockchain \
 --appVersion=$VENIDIUM_INSTALLER_VERSION
 LAST_EXIT_CODE=$?
 
