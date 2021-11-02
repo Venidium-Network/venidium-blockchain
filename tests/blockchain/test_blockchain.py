@@ -11,35 +11,35 @@ import pytest
 from blspy import AugSchemeMPL, G2Element
 from clvm.casts import int_to_bytes
 
-from chia.consensus.block_rewards import calculate_base_farmer_reward
-from chia.consensus.blockchain import ReceiveBlockResult
-from chia.consensus.coinbase import create_farmer_coin
-from chia.consensus.pot_iterations import is_overflow_block
-from chia.full_node.bundle_tools import detect_potential_template_generator
-from chia.types.blockchain_format.classgroup import ClassgroupElement
-from chia.types.blockchain_format.coin import Coin
-from chia.types.blockchain_format.foliage import TransactionsInfo
-from chia.types.blockchain_format.program import SerializedProgram
-from chia.types.blockchain_format.sized_bytes import bytes32
-from chia.types.blockchain_format.slots import InfusedChallengeChainSubSlot
-from chia.types.blockchain_format.vdf import VDFInfo, VDFProof
-from chia.types.condition_opcodes import ConditionOpcode
-from chia.types.condition_with_args import ConditionWithArgs
-from chia.types.end_of_slot_bundle import EndOfSubSlotBundle
-from chia.types.full_block import FullBlock
-from chia.types.spend_bundle import SpendBundle
-from chia.types.unfinished_block import UnfinishedBlock
+from venidium.consensus.block_rewards import calculate_base_farmer_reward
+from venidium.consensus.blockchain import ReceiveBlockResult
+from venidium.consensus.coinbase import create_farmer_coin
+from venidium.consensus.pot_iterations import is_overflow_block
+from venidium.full_node.bundle_tools import detect_potential_template_generator
+from venidium.types.blockchain_format.classgroup import ClassgroupElement
+from venidium.types.blockchain_format.coin import Coin
+from venidium.types.blockchain_format.foliage import TransactionsInfo
+from venidium.types.blockchain_format.program import SerializedProgram
+from venidium.types.blockchain_format.sized_bytes import bytes32
+from venidium.types.blockchain_format.slots import InfusedChallengeChainSubSlot
+from venidium.types.blockchain_format.vdf import VDFInfo, VDFProof
+from venidium.types.condition_opcodes import ConditionOpcode
+from venidium.types.condition_with_args import ConditionWithArgs
+from venidium.types.end_of_slot_bundle import EndOfSubSlotBundle
+from venidium.types.full_block import FullBlock
+from venidium.types.spend_bundle import SpendBundle
+from venidium.types.unfinished_block import UnfinishedBlock
 from tests.block_tools import create_block_tools_async, get_vdf_info_and_proof
-from chia.util.errors import Err
-from chia.util.hash import std_hash
-from chia.util.ints import uint8, uint64, uint32
-from chia.util.merkle_set import MerkleSet
-from chia.util.recursive_replace import recursive_replace
+from venidium.util.errors import Err
+from venidium.util.hash import std_hash
+from venidium.util.ints import uint8, uint64, uint32
+from venidium.util.merkle_set import MerkleSet
+from venidium.util.recursive_replace import recursive_replace
 from tests.wallet_tools import WalletTool
 from tests.setup_nodes import bt, test_constants
 from tests.util.blockchain import create_blockchain
 from tests.util.keyring import TempKeyring
-from chia.wallet.puzzles.p2_delegated_puzzle_or_hidden_puzzle import (
+from venidium.wallet.puzzles.p2_delegated_puzzle_or_hidden_puzzle import (
     DEFAULT_HIDDEN_PUZZLE_HASH,
     calculate_synthetic_secret_key,
 )
@@ -2475,7 +2475,7 @@ class TestBodyValidation:
 
         spend = list(blocks[-1].get_included_reward_coins())[0]
         print("spend=", spend)
-        # this create coin will spend all of the coin, so the 10 mojos below
+        # this create coin will spend all of the coin, so the 10 rays below
         # will be "minted".
         output = ConditionWithArgs(ConditionOpcode.CREATE_COIN, [bt.pool_ph, int_to_bytes(spend.amount)])
         condition_dict = {ConditionOpcode.CREATE_COIN: [output]}

@@ -4,10 +4,10 @@
 # from secrets import token_bytes
 # import aiosqlite
 # import pytest
-# from chia.util.ints import uint32, uint64, uint128
-# from chia.wallet.wallet_coin_record import WalletCoinRecord
-# from chia.wallet.util.wallet_types import WalletType
-# from chia.types.coin import Coin
+# from venidium.util.ints import uint32, uint64, uint128
+# from venidium.wallet.wallet_coin_record import WalletCoinRecord
+# from venidium.wallet.util.wallet_types import WalletType
+# from venidium.types.coin import Coin
 #
 #
 # @pytest.fixture(scope="module")

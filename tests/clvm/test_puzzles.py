@@ -3,13 +3,13 @@ from unittest import TestCase
 
 from blspy import AugSchemeMPL, BasicSchemeMPL, G1Element, G2Element
 
-from chia.types.blockchain_format.program import Program
-from chia.types.blockchain_format.sized_bytes import bytes32
-from chia.types.coin_spend import CoinSpend
-from chia.types.spend_bundle import SpendBundle
-from chia.util.condition_tools import ConditionOpcode
-from chia.util.hash import std_hash
-from chia.wallet.puzzles import (
+from venidium.types.blockchain_format.program import Program
+from venidium.types.blockchain_format.sized_bytes import bytes32
+from venidium.types.coin_spend import CoinSpend
+from venidium.types.spend_bundle import SpendBundle
+from venidium.util.condition_tools import ConditionOpcode
+from venidium.util.hash import std_hash
+from venidium.wallet.puzzles import (
     p2_conditions,
     p2_delegated_conditions,
     p2_delegated_puzzle,

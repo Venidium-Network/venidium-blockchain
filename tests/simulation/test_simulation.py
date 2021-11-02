@@ -1,8 +1,8 @@
 import pytest
 
-from chia.types.peer_info import PeerInfo
+from venidium.types.peer_info import PeerInfo
 from tests.block_tools import create_block_tools_async
-from chia.util.ints import uint16
+from venidium.util.ints import uint16
 from tests.core.node_height import node_height_at_least
 from tests.setup_nodes import self_hostname, setup_full_node, setup_full_system, test_constants
 from tests.time_out_assert import time_out_assert
@@ -10,7 +10,7 @@ from tests.util.keyring import TempKeyring
 
 test_constants_modified = test_constants.replace(
     **{
-        "DIFFICULTY_STARTING": 2 ** 8,
+"DIFFICULTY_STARTING": 4,
         "DISCRIMINANT_SIZE_BITS": 1024,
         "SUB_EPOCH_BLOCKS": 140,
         "WEIGHT_PROOF_THRESHOLD": 2,

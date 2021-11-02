@@ -5,15 +5,15 @@ from typing import List
 import pytest
 from blspy import PrivateKey
 
-from chia.pools.pool_wallet import PoolWallet
-from chia.pools.pool_wallet_info import PoolState, FARMING_TO_POOL
-from chia.simulator.simulator_protocol import FarmNewBlockProtocol
-from chia.types.coin_spend import CoinSpend
-from chia.types.full_block import FullBlock
-from chia.types.peer_info import PeerInfo
-from chia.util.ints import uint16, uint32
-from chia.wallet.derive_keys import master_sk_to_singleton_owner_sk
-from chia.wallet.wallet_state_manager import WalletStateManager
+from venidium.pools.pool_wallet import PoolWallet
+from venidium.pools.pool_wallet_info import PoolState, FARMING_TO_POOL
+from venidium.simulator.simulator_protocol import FarmNewBlockProtocol
+from venidium.types.coin_spend import CoinSpend
+from venidium.types.full_block import FullBlock
+from venidium.types.peer_info import PeerInfo
+from venidium.util.ints import uint16, uint32
+from venidium.wallet.derive_keys import master_sk_to_singleton_owner_sk
+from venidium.wallet.wallet_state_manager import WalletStateManager
 from tests.setup_nodes import self_hostname, setup_simulators_and_wallets
 
 
