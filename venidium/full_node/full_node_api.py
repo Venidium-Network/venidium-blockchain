@@ -6,7 +6,7 @@ from secrets import token_bytes
 from typing import Callable, Dict, List, Optional, Tuple, Set
 
 from blspy import AugSchemeMPL, G2Element
-from chiabip158 import PyBIP158
+from Venidiumbip158 import PyBIP158
 
 import venidium.server.ws_connection as ws
 from venidium.consensus.block_creation import create_unfinished_block
