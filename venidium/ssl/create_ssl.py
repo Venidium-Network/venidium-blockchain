@@ -55,7 +55,7 @@ def generate_ca_signed_cert(ca_crt: bytes, ca_key: bytes, cert_out: Path, key_ou
         [
             x509.NameAttribute(NameOID.COMMON_NAME, "Venidium"),
             x509.NameAttribute(NameOID.ORGANIZATION_NAME, "Venidium"),
-            x509.NameAttribute(NameOID.ORGANIZATIONAL_UNIT_NAME, "Organic Farming Division"),
+            x509.NameAttribute(NameOID.ORGANIZATIONAL_UNIT_NAME, "Venidium Dev Team"),
         ]
     )
 
@@ -90,7 +90,7 @@ def make_ca_cert(cert_path: Path, key_path: Path):
         [
             x509.NameAttribute(NameOID.ORGANIZATION_NAME, "Venidium"),
             x509.NameAttribute(NameOID.COMMON_NAME, "Venidium CA"),
-            x509.NameAttribute(NameOID.ORGANIZATIONAL_UNIT_NAME, "Organic Farming Division"),
+            x509.NameAttribute(NameOID.ORGANIZATIONAL_UNIT_NAME, "Venidium Dev Team"),
         ]
     )
     root_cert = (
