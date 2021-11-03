@@ -6,11 +6,11 @@ from secrets import token_bytes
 from typing import Callable, Dict, List, Optional, Tuple, Set
 
 from blspy import AugSchemeMPL, G2Element
-from Venidiumbip158 import PyBIP158
+from chiabip158 import PyBIP158
 
 import venidium.server.ws_connection as ws
 from venidium.consensus.block_creation import create_unfinished_block
-from venidiumdium.consensus.block_record import BlockRecord
+from venidium.consensus.block_record import BlockRecord
 from venidium.consensus.pot_iterations import calculate_ip_iters, calculate_iterations_quality, calculate_sp_iters
 from venidium.full_node.bundle_tools import best_solution_generator_from_template, simple_solution_generator
 from venidium.full_node.full_node import FullNode
